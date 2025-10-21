@@ -17,7 +17,7 @@
 
 **Publication Date**: [DATE_OR_UNKNOWN]
 
-**Discovery Method**: [web_search | brave_web | brave_local | snowballing | manual]
+**Discovery Method**: [web_search | snowballing | manual]
 
 **Score**: [TOTAL_SCORE]/10
 - Credibility: [SCORE]/10

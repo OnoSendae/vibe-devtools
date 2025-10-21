@@ -316,7 +316,7 @@ Analise projetos open-source em detalhes:
 ### Com Ferramentas Externas
 - **web_search**: Busca geral na web
 - **web_search**: Busca específica e recente
-- **brave_local_search**: Busca local
+- **web_search**: Busca local
 - **codebase_search**: Busca no repositório
 
 ---

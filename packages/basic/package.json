@@ -1,7 +1,7 @@
 {
-    "name": "@vibes/basic",
+    "name": "@vibe-devtools/basic",
     "version": "1.0.0",
-    "description": "Ferramentas fundacionais para construir e planejar no ecossistema Vibes",
+    "description": "Vibe DevTools Basic Kit - Foundation tools for building and planning (makers, planners, constitution)",
     "type": "module",
     "main": "index.js",
     "files": [
@@ -14,7 +14,8 @@
         "vibe.json"
     ],
     "keywords": [
-        "vibe",
+        "vibe-devtools",
+        "vdt",
         "basic",
         "maker",
         "planner",
@@ -23,23 +24,27 @@
         "ai",
         "foundation",
         "meta",
-        "tools"
+        "tools",
+        "vibe-driven-development"
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/vibes-org/basic"
+        "url": "https://github.com/onosendae/vibe-devtools",
+        "directory": "packages/basic"
     },
     "bugs": {
-        "url": "https://github.com/vibes-org/basic/issues"
+        "url": "https://github.com/onosendae/vibe-devtools/issues"
     },
-    "homepage": "https://github.com/vibes-org/basic#readme",
-    "author": "Vibes Team",
+    "homepage": "https://vibe-devtools.dev",
+    "author": "Cleber Hensel <cleberhensel@onosendae.com>",
     "license": "MIT",
     "engines": {
         "node": ">=18.0.0"
     },
+    "publishConfig": {
+        "access": "public"
+    },
     "scripts": {
-        "postinstall": "node scripts/post-install.js",
-        "test": "echo \"Tests not yet implemented\" && exit 0"
+        "postinstall": "echo '✅ @vdt/basic installed! Run: vdt list'"
     }
 }

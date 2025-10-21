@@ -1,8 +1,9 @@
 {
-    "name": "@vibes/research",
-    "version": "2.0.0",
-    "description": "Research agentic workflows with academic rigor",
+    "name": "@vibe-devtools/research",
+    "version": "1.0.0",
+    "description": "Vibe DevTools Research Kit - Complete research pipelines (simple, deep, expert) for systematic investigation",
     "type": "module",
+    "main": "index.js",
     "files": [
         ".cursor/",
         "templates/",
@@ -10,39 +11,39 @@
         "examples/",
         "constitution.md",
         "README.md",
-        "CHANGELOG.md",
         "vibe.json"
     ],
     "keywords": [
-        "vibe",
+        "vibe-devtools",
+        "vdt",
         "research",
+        "investigation",
+        "analysis",
+        "ai",
         "cursor",
         "agentic",
-        "ai",
-        "academic",
         "deep-research",
-        "cursor-commands"
+        "expert-research",
+        "vibe-driven-development"
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/vibes-org/research"
+        "url": "https://github.com/onosendae/vibe-devtools",
+        "directory": "packages/research"
     },
     "bugs": {
-        "url": "https://github.com/vibes-org/research/issues"
+        "url": "https://github.com/onosendae/vibe-devtools/issues"
     },
-    "homepage": "https://github.com/vibes-org/research#readme",
-    "author": "Vibes Team",
+    "homepage": "https://vibe-devtools.dev",
+    "author": "Cleber Hensel <cleberhensel@onosendae.com>",
     "license": "MIT",
-    "peerDependencies": {
-        "@vibes/core": "^1.0.0"
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "publishConfig": {
+        "access": "public"
     },
     "scripts": {
-        "postinstall": "node scripts/post-install.js",
-        "test": "vitest",
-        "lint": "eslint ."
-    },
-    "devDependencies": {
-        "vitest": "^1.0.0",
-        "eslint": "^8.0.0"
+        "postinstall": "echo '✅ @vdt/research installed! Run: vdt list'"
     }
 }

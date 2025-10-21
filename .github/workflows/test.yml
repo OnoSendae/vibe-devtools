@@ -1,30 +1,72 @@
-name: Test
+name: Test vibe-devtools
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   pull_request:
-    branches: [main]
+    branches: [main, develop]
 
 jobs:
-  test:
+  test-cli:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v4
-      
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'pnpm'
-      
-      - name: Install dependencies
-        run: pnpm install
-      
-      - name: Run tests
-        run: pnpm test
+      - name: Checkout code
+        uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install CLI dependencies
+        run: |
+          cd apps/cli
+          npm ci
+
+      - name: Build CLI
+        run: |
+          cd apps/cli
+          npm run build
+
+      - name: Test CLI
+        run: |
+          cd apps/cli
+          node dist/index.js --version
+          node dist/index.js --help
+
+  test-packages:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: [basic, research]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate package
+        run: |
+          cd packages/${{ matrix.package }}
+          
+          # Check vibe.json exists
+          if [ ! -f "vibe.json" ]; then
+            echo "❌ vibe.json not found"
+            exit 1
+          fi
+          
+          # Validate vibe.json
+          node -e "JSON.parse(require('fs').readFileSync('vibe.json', 'utf-8'))"
+          
+          # Check package.json
+          if [ ! -f "package.json" ]; then
+            echo "❌ package.json not found"
+            exit 1
+          fi
+          
+          echo "✅ Package ${{ matrix.package }} is valid"

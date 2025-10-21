@@ -134,8 +134,8 @@
                                 "type": "string",
                                 "enum": [
                                     "web_search",
-                                    "brave_web_search",
-                                    "brave_local_search"
+                                    "web_search",
+                                    "web_search"
                                 ]
                             },
                             "resultsCount": {
@@ -193,8 +193,8 @@
                         "type": "string",
                         "enum": [
                             "web_search",
-                            "brave_web",
-                            "brave_local",
+                            "web_search",
+                            "web_search",
                             "snowballing",
                             "manual"
                         ],
