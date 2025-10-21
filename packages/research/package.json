@@ -1,0 +1,48 @@
+{
+    "name": "@vibes/research",
+    "version": "2.0.0",
+    "description": "Research agentic workflows with academic rigor",
+    "type": "module",
+    "files": [
+        ".cursor/",
+        "templates/",
+        "scripts/",
+        "examples/",
+        "constitution.md",
+        "README.md",
+        "CHANGELOG.md",
+        "vibe.json"
+    ],
+    "keywords": [
+        "vibe",
+        "research",
+        "cursor",
+        "agentic",
+        "ai",
+        "academic",
+        "deep-research",
+        "cursor-commands"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/vibes-org/research"
+    },
+    "bugs": {
+        "url": "https://github.com/vibes-org/research/issues"
+    },
+    "homepage": "https://github.com/vibes-org/research#readme",
+    "author": "Vibes Team",
+    "license": "MIT",
+    "peerDependencies": {
+        "@vibes/core": "^1.0.0"
+    },
+    "scripts": {
+        "postinstall": "node scripts/post-install.js",
+        "test": "vitest",
+        "lint": "eslint ."
+    },
+    "devDependencies": {
+        "vitest": "^1.0.0",
+        "eslint": "^8.0.0"
+    }
+}

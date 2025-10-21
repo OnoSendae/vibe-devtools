@@ -1,0 +1,94 @@
+{
+    "name": "basic",
+    "version": "1.0.0",
+    "description": "Ferramentas fundacionais para construir e planejar no ecossistema Vibes - Meta-vibe que permite criar mais vibes",
+    "author": "Vibes Team",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/vibes-org/basic"
+    },
+    "type": "foundation",
+    "category": "core",
+    "tags": [
+        "basic",
+        "maker",
+        "planner",
+        "foundation",
+        "meta",
+        "tools",
+        "builder"
+    ],
+    "symlinks": {
+        ".cursor/commands": ".cursor/commands",
+        ".cursor/rules": ".cursor/rules",
+        "vibes/structure/templates": "templates",
+        "vibes/scripts": "scripts"
+    },
+    "dependencies": {},
+    "peerDependencies": {},
+    "hooks": {
+        "postInstall": "scripts/post-install.sh"
+    },
+    "config": {
+        "enableMakers": true,
+        "enablePlanners": true,
+        "defaultPlanner": "planner.project",
+        "defaultMaker": "maker.command"
+    },
+    "compatibility": {
+        "cursor": ">=0.40.0",
+        "node": ">=18.0.0"
+    },
+    "commands": [
+        {
+            "name": "maker.command",
+            "description": "Criar novos commands usando Framework QUEST",
+            "category": "maker"
+        },
+        {
+            "name": "maker.rule",
+            "description": "Criar rules baseadas em best practices",
+            "category": "maker"
+        },
+        {
+            "name": "maker.script",
+            "description": "Criar scripts auxiliares",
+            "category": "maker"
+        },
+        {
+            "name": "maker.prompt",
+            "description": "Criar prompts reutilizáveis",
+            "category": "maker"
+        },
+        {
+            "name": "planner.project",
+            "description": "Planejar projetos completos com geração automática de tasks",
+            "category": "planner"
+        },
+        {
+            "name": "planner.backlog",
+            "description": "Gerar backlogs estruturados",
+            "category": "planner"
+        },
+        {
+            "name": "constitution",
+            "description": "Criar e gerenciar constituição do projeto",
+            "category": "governance"
+        },
+        {
+            "name": "vibe.manager",
+            "description": "Gerenciar vibes, memory, tasks e integrações",
+            "category": "management"
+        }
+    ],
+    "scripts": [
+        {
+            "name": "generator.task.cjs",
+            "description": "Gerar tasks a partir de JSON estruturado",
+            "used_by": [
+                "planner.project"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,48 @@
+{
+    "research_id": "deep-research-ia-tools-expert-20251020-144206",
+    "theme": "Deep Research com ferramentas de IA",
+    "level": "expert",
+    "objectives": [
+        "Pesquisa detalhada sobre prompts e fluxos de trabalho de Deep Research",
+        "Identificar ferramentas, processos e procedimentos de Deep Research",
+        "Analisar operacionalização e fluxos agenticos",
+        "Mapear estruturas de armazenamento de memória para processamento",
+        "Aprofundar orquestração de agentes e layers de pesquisa",
+        "Estruturar dados entre camadas de análise",
+        "Identificar informações relevantes de análise",
+        "Definir comunicação entre camadas"
+    ],
+    "criteria": "acadêmico rigoroso",
+    "mode": "configurável",
+    "created_at": "2025-01-20T14:42:06Z",
+    "status": "in_progress",
+    "references": {
+        "total_collected": 0,
+        "total_analyzed": 0,
+        "by_layer": {
+            "layer_1_broad": 0,
+            "layer_2_specialized": 0,
+            "layer_3_references": 0
+        }
+    },
+    "syntheses": {
+        "incremental": 0,
+        "by_category": 0,
+        "intermediate": false,
+        "final": false
+    },
+    "validation": {
+        "consistency": false,
+        "completeness": false,
+        "quality": false,
+        "final": false
+    },
+    "quality_metrics": {
+        "completeness": 0,
+        "depth": 0,
+        "diversity": 0,
+        "recency": 0,
+        "reliability": 0,
+        "overall_score": 0
+    }
+}

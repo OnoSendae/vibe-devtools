@@ -1,0 +1,223 @@
+# Commands: Structure and Quality Standards
+
+## Principle
+
+TODOS os commands DEVEM seguir a estrutura universal definida em `template.commands.md`. Consistência absoluta garante predictabilidade, manutenibilidade e qualidade.
+
+## Guidance
+
+### DO (Fazer)
+
+- **Usar Template Universal Obrigatoriamente**:
+  - Template: `vibes/structure/templates/template.commands.md`
+  - É a ÚNICA fonte de verdade para estrutura de commands
+  - NUNCA criar estrutura divergente
+
+- **Frontmatter YAML Válido**:
+  ```yaml
+  ---
+  description: Uma linha clara descrevendo o que o command faz
+  ---
+  ```
+
+- **Seção User Input (Obrigatória)**:
+  ```markdown
+  ## Entrada do Usuário
+  
+  ```text
+  $ARGUMENTS
+  ```
+  
+  Você **DEVE** considerar a entrada do usuário antes de prosseguir.
+  ```
+
+- **Seção Goal (Completa)**:
+  - 2-3 parágrafos explicando o command
+  - **Quando usar**: Casos de uso claros
+  - **Pré-requisitos**: Dependências explícitas
+
+- **Discovery & Validation (Se Input Pode Ser Vago)**:
+  - Perguntas de esclarecimento
+  - Validações de pré-requisitos
+  - Checklist de informações necessárias
+
+- **Execution Workflow (Fases Numeradas)**:
+  - Fase 1: Validar inputs
+  - Fases 2-N: Processamento
+  - Fase N+1: Reportar resultados
+  - Mínimo: 4 fases, Máximo razoável: 10 fases
+
+- **Operating Principles (Obrigatório)**:
+  - Padrões de Qualidade
+  - Tratamento de Erros
+  - Restrições (SEMPRE/NUNCA)
+
+- **Examples (Mínimo 2)**:
+  - Input bom → Output esperado
+  - Input com erro → Tratamento adequado
+  - Opcionalmente: Input complexo → Output detalhado
+
+- **Seção Context (Ao Final)**:
+  ```markdown
+  ## Contexto
+  
+  $ARGUMENTS
+  ```
+
+- **Quality Checklist (Validação Final)**:
+  - Lista de verificações obrigatórias
+  - Mínimo 5 itens
+  - Específicos ao command
+
+### DON'T (Não Fazer)
+
+- ❌ Omitir frontmatter
+- ❌ Omitir seção "Entrada do Usuário"
+- ❌ Omitir seção "Contexto"
+- ❌ Omitir examples
+- ❌ Usar estrutura diferente do template
+- ❌ Deixar placeholders `[CAPS]` sem preencher
+- ❌ Criar command > 1000 linhas (refatorar se necessário)
+- ❌ Misturar linguagens (code em inglês, texto em português)
+- ❌ Omitir tratamento de erros
+- ❌ Usar linguagem vaga ("talvez", "possivelmente")
+
+## Examples
+
+### ✅ Good Structure
+
+```markdown
+---
+description: Buscar termo em arquivos do projeto com filtros e estatísticas
+---
+
+## Entrada do Usuário
+
+```text
+$ARGUMENTS
+```
+
+Você **DEVE** considerar a entrada do usuário antes de prosseguir.
+
+## Objetivo
+
+Buscar termo em arquivos do projeto...
+
+**Quando usar**: Quando precisa encontrar código específico.
+
+**Pré-requisitos**: 
+- Projeto com arquivos para buscar
+- Termo de busca definido
+
+## Fluxo de Execução
+
+### Fase 1: Validar Input
+
+1. Parsear argumentos
+2. Validar termo não vazio
+
+### Fase 2: Executar Busca
+
+1. Usar grep tool
+2. Processar resultados
+
+### Fase 3: Formatar Output
+
+1. Gerar estatísticas
+2. Formatar resultados
+
+## Princípios Operacionais
+
+### Padrões de Qualidade
+
+- Performance: Usar grep (rápido)
+- Contexto: Sempre mostrar linhas ao redor
+
+### Tratamento de Erros
+
+- Se termo vazio: ERRO e aguardar
+- Se nenhum match: Informar "0 resultados"
+
+### Restrições
+
+- SEMPRE usar grep tool
+- SEMPRE mostrar estatísticas
+- NUNCA limitar resultados sem avisar
+
+## Exemplos
+
+### Input Bom → Output
+
+```
+Input: /search.simple "async function"
+
+Output:
+🔍 Busca: "async function"
+📊 Estatísticas: 42 matches em 15 arquivos
+```
+
+## Contexto
+
+$ARGUMENTS
+
+## Checklist de Qualidade
+
+- [ ] Termo validado
+- [ ] grep utilizado
+- [ ] Estatísticas calculadas
+- [ ] Resultados formatados
+```
+
+### ❌ Bad Structure
+
+```markdown
+# Search Command
+
+Searches for stuff.
+
+Usage: /search [term]
+
+That's it.
+```
+
+**Problemas**:
+- ❌ Sem frontmatter
+- ❌ Sem seção User Input
+- ❌ Sem Execution Workflow
+- ❌ Sem Examples
+- ❌ Sem Context
+- ❌ Sem Checklist
+- ❌ Vago ("stuff")
+
+## Rationale
+
+**Template Universal**: Garante que todos os commands sejam imediatamente compreensíveis por qualquer developer/AI.
+
+**Seções Obrigatórias**: Previne omissões que levam a commands incompletos ou ambíguos.
+
+**Execution Workflow em Fases**: Torna fluxo claro, testável e debugável.
+
+**Examples**: Documentação viva que mostra uso real.
+
+**Checklist**: Valida que command foi completamente implementado.
+
+## Enforcement
+
+### Automated (via maker.command)
+
+- Carregar `template.commands.md` como ÚNICA referência
+- Validar todas seções obrigatórias presentes
+- Verificar nenhum placeholder `[CAPS]` não resolvido
+- Validar frontmatter YAML syntax
+
+### Manual (Code Review)
+
+- Verificar clareza do Goal
+- Validar examples são realistas
+- Confirmar error handling adequado
+
+## References
+
+- Template Universal: `vibes/structure/templates/template.commands.md`
+- Framework QUEST: Documentado em `maker.command.md`
+- Constitution: `vibes/configs/constitution.md`

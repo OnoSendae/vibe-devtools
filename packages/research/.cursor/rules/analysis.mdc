@@ -1,0 +1,217 @@
+# Analysis Rules
+
+## Análise Individual de Referências
+
+### Requisitos Mínimos
+- **Mínimo 2 findings** por referência
+- **Mínimo 2 citações** importantes
+- **Avaliação crítica completa** (strengths + limitations)
+- **Confidence level** para cada finding
+- **Identificação de vieses** potenciais
+
+### Executive Summary
+- Resumir conteúdo principal em 3-5 linhas
+- Identificar contribuição única desta fonte
+- Alinhamento com objetivo da pesquisa
+
+### Key Findings
+Para cada finding:
+- **Título claro** e descritivo
+- **Descrição detalhada** do finding
+- **Evidência** (do snippet ou inferida)
+- **Significância** (por que importa)
+- **Confidence Level** (Very High/High/Medium/Low)
+
+### Important Quotes
+- Extrair 2-4 citações relevantes
+- Adicionar contexto de cada citação
+- Incluir localização (se disponível)
+- Avaliar relevância da citação
+
+### Critical Evaluation
+
+#### Strengths (2-3)
+- Pontos fortes identificados
+- Qualidades do conteúdo
+- Contribuições únicas
+
+#### Limitations (1-3)
+- Limitações ou fraquezas
+- Áreas não cobertas
+- Problemas metodológicos
+
+#### Potential Biases
+- Vieses comerciais
+- Vieses temporais
+- Vieses geográficos
+- Vieses tecnológicos
+
+#### Credibility Assessment
+- Reiterar avaliação de credibilidade
+- Reasoning detalhado
+- Considerar: autoridade, qualidade, referências, metodologia
+
+## Análise Comparativa
+
+### Consensos
+- Comparar findings entre referências
+- Identificar statements similares/idênticos
+- Verificar se conclusões convergem
+- Calcular strength (Strong/Moderate/Weak)
+
+### Divergências
+- Comparar findings que se contradizem
+- Identificar diferentes perspectivas
+- Analisar contextos diferentes
+- Avaliar possíveis razões
+
+### Padrões
+- Identificar conceitos recorrentes
+- Agrupar findings relacionados
+- Mapear relações entre conceitos
+- Avaliar prevalência de padrões
+
+## Connections & Cross-References
+
+### Related References
+- Identificar outras referências relacionadas
+- Mapear como se conectam
+- Avaliar complementaridade
+
+### Citations & Links
+- Identificar citações mencionadas
+- Avaliar relevância para snowballing
+- Priorizar citações recorrentes
+
+### Alignment with Research Objective
+- Avaliar relevância à pergunta central
+- Identificar contribuições específicas
+- Mapear gaps preenchidos
+
+## Actionable Insights
+
+### Insights Práticos
+- Insights derivados da referência
+- Ações recomendadas
+- Aplicabilidade prática
+
+### Gaps & Questions
+- Perguntas levantadas mas não respondidas
+- Gaps de informação
+- Áreas para investigação futura
+
+## Qualidade da Análise
+
+### Profundidade
+- Análise completa e detalhada
+- Não superficial ou genérica
+- Consideração de múltiplos aspectos
+
+### Rastreabilidade
+- Cada finding/quote rastreável à fonte
+- Evidências específicas
+- Citações precisas
+
+### Objetividade
+- Avaliação crítica equilibrada
+- Strengths + limitations
+- Não apenas positivo ou negativo
+
+### Estrutura Consistente
+- Seguir template oficial
+- Todas seções obrigatórias presentes
+- Formatação consistente
+
+## Metadados de Análise
+
+### Atualizar Reference
+```json
+{
+  "analysis": {
+    "status": "completed",
+    "reportPath": "references/REF-001-title.md",
+    "keyFindings": [
+      "Finding 1 summary",
+      "Finding 2 summary"
+    ],
+    "quotes": [
+      {
+        "text": "Quote text",
+        "context": "Quote context"
+      }
+    ],
+    "analyzedAt": "2025-01-16T15:00:00Z"
+  }
+}
+```
+
+### Estatísticas
+- Total de findings
+- Total de citações
+- Average confidence
+- Categorias analisadas
+
+## Sínteses Incrementais
+
+### Trigger
+- A cada 10 referências analisadas (configurável)
+- Verificar contador
+- Executar synthesis se necessário
+
+### Progresso
+- Documentar progresso
+- Log de sínteses geradas
+- Continuar análise
+
+## Tratamento de Erros
+
+### Análise Falha
+- Marcar status = "failed"
+- Continuar com próxima referência
+- Documentar falha em metadata
+- Não abortar análise completa
+
+### Erro ao Salvar
+- Verificar permissões
+- Verificar espaço em disco
+- Tentar salvar novamente
+- Abortar se crítico
+
+### Síntese Falha
+- Log warning
+- Continuar análise
+- Tentar síntese novamente depois
+- Não bloquear pipeline
+
+## Otimizações
+
+### Batch Metadata Updates
+- Atualizar metadata a cada N refs
+- Não uma por uma
+- Eficiência de I/O
+
+### Parallel Processing
+- Analisar múltiplas refs em paralelo (se possível)
+- Balancear carga
+- Gerenciar recursos
+
+### Caching
+- Cache informações comuns
+- Autor patterns
+- Domain reputation
+- Reduzir processamento
+
+## Validação de Análise
+
+### Portões de Qualidade
+- Todas refs top analisadas
+- Relatório individual gerado
+- Todas seções obrigatórias preenchidas
+- Findings identificados (min 2)
+- Avaliação crítica completa
+
+### Checklist
+- [ ] Análise profunda (não superficial)
+- [ ] Rastreabilidade completa
+- [ ] Avaliação crítica equilibrada
+- [ ] Pronto para síntese

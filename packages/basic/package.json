@@ -1,0 +1,45 @@
+{
+    "name": "@vibes/basic",
+    "version": "1.0.0",
+    "description": "Ferramentas fundacionais para construir e planejar no ecossistema Vibes",
+    "type": "module",
+    "main": "index.js",
+    "files": [
+        ".cursor/",
+        "templates/",
+        "scripts/",
+        "examples/",
+        "constitution.md",
+        "README.md",
+        "vibe.json"
+    ],
+    "keywords": [
+        "vibe",
+        "basic",
+        "maker",
+        "planner",
+        "cursor",
+        "agentic",
+        "ai",
+        "foundation",
+        "meta",
+        "tools"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/vibes-org/basic"
+    },
+    "bugs": {
+        "url": "https://github.com/vibes-org/basic/issues"
+    },
+    "homepage": "https://github.com/vibes-org/basic#readme",
+    "author": "Vibes Team",
+    "license": "MIT",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "scripts": {
+        "postinstall": "node scripts/post-install.js",
+        "test": "echo \"Tests not yet implemented\" && exit 0"
+    }
+}

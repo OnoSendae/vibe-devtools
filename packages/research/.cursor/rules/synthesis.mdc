@@ -1,0 +1,267 @@
+# Synthesis Rules
+
+## Sínteses Incrementais
+
+### Trigger
+- A cada 10 referências analisadas (configurável)
+- Verificar contador de refs analisadas
+- Executar synthesis se necessário
+- Continuar análise após síntese
+
+### Escopo
+- Últimas N referências analisadas desde última síntese
+- Padrão: últimas 10 referências
+- Configurável via synthesisInterval
+
+### Objetivo
+- Consolidar descobertas parciais
+- Identificar padrões emergentes
+- Documentar gaps encontrados
+- Guiar próximos passos
+
+## Síntese Final
+
+### Trigger
+- Após todas referências analisadas
+- Consolidar todas sínteses incrementais
+- Gerar síntese completa
+
+### Objetivo
+- Consolidar todas as descobertas
+- Identificar insights principais
+- Gerar recomendações finais
+- Preparar para validação
+
+## Identificação de Padrões
+
+### Análise de Frequência
+- Quais conceitos aparecem em múltiplas refs?
+- Quais tecnologias mais mencionadas?
+- Quais metodologias recorrentes?
+
+### Critérios de Padrão
+- Aparece em 3+ referências
+- Significativo para objetivo da pesquisa
+- Documentado com evidências específicas
+
+### Categorização de Padrões
+- **Técnicos**: Implementações, arquiteturas, algoritmos
+- **Metodológicos**: Abordagens, processos, workflows
+- **Conceituais**: Princípios, teorias, frameworks
+- **Práticos**: Best practices, casos de uso, pitfalls
+
+### Confidence Level
+- **Very High**: 70%+ refs mencionam + alta credibilidade
+- **High**: 50-70% refs mencionam + credibilidade moderada
+- **Medium**: 30-50% refs mencionam
+- **Low**: <30% refs mencionam
+
+## Temas Emergentes
+
+### Agrupamento
+- Usar similaridade semântica
+- Agrupar findings relacionados
+- Identificar temas que atravessam múltiplas refs
+
+### Maturidade dos Temas
+- **Well-established**: Consenso forte, múltiplas fontes high-authority
+- **Emerging**: Mencionado por várias fontes mas ainda evoluindo
+- **Speculative**: Poucas menções, baixa confidence
+
+## Consensos
+
+### Identificação
+- Comparar findings entre referências
+- Identificar statements similares/idênticos
+- Verificar se conclusões convergem
+
+### Strength Calculation
+- **Strong**: 70%+ refs concordam + alta credibilidade
+- **Moderate**: 50-70% concordam
+- **Weak**: <50% concordam
+
+### Documentação
+- Statement do consenso
+- Referências que suportam
+- Strength calculado
+- Implicações
+
+## Divergências
+
+### Identificação
+- Comparar findings que se contradizem
+- Identificar diferentes perspectivas sobre mesmo tópico
+- Analisar contextos diferentes
+
+### Análise de Razões
+- Contextos diferentes?
+- Temporal (informação desatualizada)?
+- Metodológico (abordagens diferentes)?
+- Viés (comercial, regional)?
+
+### Resolução
+- **Resolved**: Divergência explicada por contexto diferente
+- **Unresolved**: Genuína discordância sem resolução clara
+- **Requires more data**: Precisa de mais pesquisa
+
+### Documentação
+- Perspectiva A com referências
+- Perspectiva B com referências
+- Análise da divergência
+- Status de resolução
+
+## Gaps de Informação
+
+### Identificação
+- Agregar "Questions Raised" de todas as refs
+- Identificar perguntas recorrentes
+- Priorizar por relevância ao objetivo
+
+### Áreas Sub-cobertas
+- Aspectos do objetivo com poucas referências
+- Tópicos mencionados mas não explorados
+- Lacunas na análise
+
+### Priorização
+- **High**: Essencial para responder pergunta central
+- **Medium**: Importante mas não bloqueante
+- **Low**: Nice to have
+
+## Recomendações
+
+### Ajustes de Busca
+- Recomendar novas queries
+- Rationale para cada query
+- Expected outcome
+
+### Snowballing Targets
+- Fontes citadas por múltiplas refs
+- Papers/docs mencionados frequentemente
+- Priorizar para busca
+
+### Ajustar Priorização
+- Aumentar prioridade para certos tipos de refs
+- Diminuir para áreas já bem cobertas
+
+## Insights Preliminares
+
+### Insights Acionáveis
+- Baseados em padrões e consensos
+- Findings de alta confidence
+- Aplicáveis ao objetivo da pesquisa
+
+### Documentação
+- Finding do insight
+- Evidências que suportam
+- Confidence level
+- Implicações práticas
+
+## Quality of Evidence
+
+### Categorização
+- **High-Quality**: Alta credibilidade e profundidade
+- **Medium-Quality**: Qualidade moderada
+- **Low-Quality**: Limitações significativas
+
+### Transparência
+- Incluir todas categorias
+- Documentar limitações
+- Não omitir fontes de baixa qualidade
+
+## Metadados de Síntese
+
+### Atualizar metadata.json
+```json
+{
+  "synthesis": {
+    "miniSyntheses": [
+      {
+        "synthesisId": "SYNTH-001",
+        "referencesIncluded": ["REF-001", "REF-002", ...],
+        "keyPatterns": ["Pattern 1", "Pattern 2"],
+        "gaps": ["Gap 1"],
+        "contradictions": ["Divergence 1"],
+        "reportPath": "syntheses/SYNTH-001-mini.md",
+        "createdAt": "2025-01-16T16:00:00Z"
+      }
+    ],
+    "finalSynthesis": {
+      "reportPath": "syntheses/SYNTH-FINAL.md",
+      "chapterPaths": [],
+      "completedAt": "2025-01-16T16:30:00Z"
+    }
+  }
+}
+```
+
+## Validação de Síntese
+
+### Portões de Qualidade
+- Padrões identificados com evidências
+- Consensos mapeados com strength
+- Divergências analisadas
+- Gaps documentados
+- Recomendações geradas
+
+### Checklist
+- [ ] Análise objetiva (não especulativa)
+- [ ] Rastreabilidade completa
+- [ ] Utilidade para próximos passos
+- [ ] Template preenchido completamente
+- [ ] Refs citadas para cada finding
+
+## Tratamento de Erros
+
+### < 2 Refs Analisadas
+- ERRO: Mínimo 2 refs necessário para síntese
+- Aguardar mais análises
+- Não gerar síntese prematura
+
+### Modo Não Especificado
+- Inferir automaticamente
+- Se todas refs analisadas → final
+- Se parcial → incremental
+
+### Refs Não Encontradas
+- ERRO: Nenhuma ref analisada
+- Verificar metadata
+- Verificar paths
+
+### Erro ao Carregar Análise
+- Log warning
+- Pular ref
+- Continuar com refs disponíveis
+
+## Otimizações
+
+### Incremental Processing
+- Processar apenas refs novas
+- Não reprocessar refs já sintetizadas
+- Eficiência de processamento
+
+### Pattern Caching
+- Cache padrões identificados
+- Reutilizar em sínteses posteriores
+- Reduzir processamento
+
+### Parallel Synthesis
+- Sintetizar por categoria em paralelo (se possível)
+- Balancear carga
+- Gerenciar recursos
+
+## Integração com Pipeline
+
+### Após Análise
+- Trigger síntese incremental
+- Aguardar conclusão
+- Continuar análise
+
+### Após Todas Análises
+- Trigger síntese final
+- Aguardar conclusão
+- Prosseguir para validação
+
+### Antes de Validação
+- Síntese final obrigatória
+- Verificar completude
+- Validar qualidade

@@ -1,0 +1,153 @@
+# Research Rules
+
+## Princípios Operacionais
+
+### Qualidade
+- Score mínimo de qualidade: 7.0/10
+- Validação cruzada obrigatória para findings principais
+- Múltiplas perspectivas devem ser consideradas
+- Revisão de qualidade em cada fase do pipeline
+
+### Rastreabilidade
+- Todas as afirmações DEVEM ter fonte citada
+- Referências específicas são obrigatórias
+- Metodologia DEVE ser documentada completamente
+- Metadados DEVEM ser atualizados em cada fase
+
+### Objetividade
+- Análises DEVEM ser imparciais e balanceadas
+- Vieses DEVEM ser identificados e documentados
+- Limitações DEVEM ser claramente declaradas
+- Múltiplas perspectivas DEVEM ser consideradas
+
+### Transparência
+- Metodologia DEVE ser transparente e replicável
+- Decisões DEVEM ser justificadas com reasoning
+- Processo DEVE ser rastreável através de metadados
+- Fontes DEVEM ser acessíveis e verificáveis
+
+## Regras de Pesquisa
+
+### Scoring de Referências
+- 5 dimensões obrigatórias: credibility, relevance, recency, depth, authority
+- Pesos fixos: credibility(25%), relevance(30%), recency(15%), depth(20%), authority(10%)
+- Range: 0-10 (precisão: 1 casa decimal)
+- Reasoning obrigatório para cada score
+- Top 20% para análise profunda (configurável)
+
+### Análise de Referências
+- Mínimo 2 findings por referência
+- Mínimo 2 citações importantes
+- Avaliação crítica completa (strengths + limitations)
+- Confidence level obrigatório para cada finding
+- Identificação de vieses potenciais
+
+### Síntese de Findings
+- Sínteses incrementais a cada 10 referências
+- Padrões DEVEM ter evidências de 3+ fontes
+- Gaps de informação DEVEM ser documentados
+- Consensos e divergências DEVEM ser mapeados
+- Recomendações DEVEM ser acionáveis
+
+### Validação Cruzada
+- Consensos DEVEM ter nível de confiança (very_high, high, medium, low)
+- Divergências DEVEM ser analisadas e contextualizadas
+- Vieses DEVEM ser identificados e documentados
+- Score de qualidade geral obrigatório
+
+## Convenções
+
+### Nomenclatura
+- Research IDs: kebab-case, max 30 chars
+- Reference IDs: REF-001, REF-002, ...
+- Synthesis IDs: SYNTH-001, SYNTH-002, ... ou SYNTH-FINAL
+- Timestamps: ISO 8601 (UTC)
+
+### Idiomas
+- Código: inglês
+- Outputs: português brasileiro (PT-BR)
+- Documentação: português brasileiro (PT-BR)
+- Citações: idioma original
+
+### Estrutura
+- Diretório base: ./memory/[research-id]/
+- Subdiretórios: references/, syntheses/, validation/, final-report/
+- Arquivos obrigatórios: metadata.json, README.md
+
+## Ferramentas de Busca
+
+### web_search
+- Uso: queries gerais e amplas
+- Conteúdo: acadêmico, técnico, documentação
+- Limite: 10-20 resultados por query
+
+### web_search (MCP)
+- Uso: queries específicas e recentes
+- Conteúdo: resultados frescos, diversidade de fontes
+- Limite: 10-20 resultados por query
+
+### codebase_search
+- Uso: busca no repositório local
+- Conteúdo: código, documentação interna
+- Quando usar: pesquisas sobre o próprio projeto
+
+## Tratamento de Erros
+
+### Erros Críticos
+- Research ID não encontrado
+- Metadata JSON corrompido
+- Diretório base não existe
+- Template não encontrado
+
+Ação: Abortar pesquisa + reportar erro detalhado
+
+### Erros Não-Críticos
+- Referência individual falha
+- Query retorna 0 resultados
+- Análise parcial incompleta
+- Síntese com gaps
+
+Ação: Log warning + continuar com resto
+
+### Warnings
+- Menos de 10 referências encontradas
+- Score médio < 6.0
+- Divergências não resolvidas
+- Gaps significativos
+
+Ação: Reportar + sugerir ações
+
+## Configurações Padrão
+
+### Busca Inicial
+- Máximo de referências: 100 (range: 10-200)
+- Queries geradas: 5-8
+- Ferramentas: web_search + web_search
+
+### Scoring
+- Top percentage: 20% (range: 5-50%)
+- Pausar após scoring: true (configurável)
+- Score mínimo: 7.0 (configurável)
+
+### Análise
+- Síntese a cada: 10 referências (range: 1-50)
+- Mínimo de findings: 2
+- Mínimo de citações: 2
+
+### Validação
+- Score mínimo de qualidade: 7.0/10
+- Validação cruzada: obrigatória
+- Relatório multi-parte: obrigatório
+
+## Princípios de Integração
+
+### Com Outros Sistemas
+- Input: aceita texto livre, arquivos .md, URLs
+- Output: estrutura padronizada em ./memory/
+- Formato: JSON (metadados) + Markdown (relatórios)
+
+### Com Commands Externos
+- maker.command: usar findings para criar commands
+- planner.feature: usar insights para planejar features
+- exec.implement: usar recomendações para implementar
+- analyzer.project: usar metodologia para analisar projetos

@@ -1,0 +1,41 @@
+{
+    "name": "research",
+    "version": "2.0.0",
+    "description": "Research agentic workflows with academic rigor",
+    "author": "Vibes Team",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/vibes-org/research"
+    },
+    "type": "workflow",
+    "category": "research",
+    "tags": [
+        "research",
+        "cursor",
+        "agentic",
+        "academic",
+        "deep-research"
+    ],
+    "symlinks": {
+        ".cursor/commands": ".cursor/commands",
+        ".cursor/rules": ".cursor/rules",
+        "research/templates": "templates"
+    },
+    "dependencies": {
+        "@vibes/core": "^1.0.0"
+    },
+    "peerDependencies": {},
+    "hooks": {
+        "postInstall": "scripts/post-install.sh"
+    },
+    "config": {
+        "defaultDepth": "deep",
+        "maxReferences": 100,
+        "topPercentage": 0.2
+    },
+    "compatibility": {
+        "cursor": ">=0.40.0",
+        "node": ">=18.0.0"
+    }
+}
