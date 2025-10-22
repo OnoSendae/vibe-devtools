@@ -1,27 +1,45 @@
-name: Publish Packages
+name: Publish Packages to NPM
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/*/package.json'
   workflow_dispatch:
     inputs:
       package:
-        description: 'Package to publish (research, basic, cli, all)'
+        description: 'Package to publish (basic, research, all)'
         required: true
         default: 'all'
+        type: choice
+        options:
+          - all
+          - basic
+          - research
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
       
-      - uses: pnpm/action-setup@v2
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
         with:
           version: 8
       
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
       
@@ -31,13 +49,45 @@ jobs:
       - name: Build packages
         run: pnpm build
       
-      - name: Publish
+      - name: Detect changed packages
+        if: github.event_name == 'push'
+        id: detect
         run: |
-          if [ "${{ github.event.inputs.package }}" == "all" ]; then
-            pnpm -r --filter './packages/**' publish --access public
-          else
-            pnpm --filter @vibes/${{ github.event.inputs.package }} publish --access public
+          echo "Detecting package changes..."
+          CHANGED_PACKAGES=""
+          
+          if git diff HEAD~1 HEAD --name-only | grep -q "packages/basic/package.json"; then
+            CHANGED_PACKAGES="${CHANGED_PACKAGES}basic,"
+            echo "✅ basic changed"
           fi
+          
+          if git diff HEAD~1 HEAD --name-only | grep -q "packages/research/package.json"; then
+            CHANGED_PACKAGES="${CHANGED_PACKAGES}research,"
+            echo "✅ research changed"
+          fi
+          
+          echo "packages=${CHANGED_PACKAGES}" >> $GITHUB_OUTPUT
+          echo "Changed packages: ${CHANGED_PACKAGES}"
+      
+      - name: Publish basic
+        if: |
+          (github.event_name == 'workflow_dispatch' && (github.event.inputs.package == 'basic' || github.event.inputs.package == 'all')) ||
+          (github.event_name == 'push' && contains(steps.detect.outputs.packages, 'basic'))
+        run: |
+          cd packages/basic
+          echo "📦 Publishing @vibe-devtools/basic..."
+          npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+      - name: Publish research
+        if: |
+          (github.event_name == 'workflow_dispatch' && (github.event.inputs.package == 'research' || github.event.inputs.package == 'all')) ||
+          (github.event_name == 'push' && contains(steps.detect.outputs.packages, 'research'))
+        run: |
+          cd packages/research
+          echo "📦 Publishing @vibe-devtools/research..."
+          npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

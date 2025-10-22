@@ -111,35 +111,62 @@ npm test
 
 ## 🚀 Publishing
 
-### CLI (vibe-devtools)
+### 📋 Método Recomendado (Automático)
+
+**Para atualizar READMEs ou fazer patches:**
 
 ```bash
-# Manual
-cd apps/cli
-npm version patch
-npm publish
+# Usar helper script (recomendado)
+./scripts/publish-helper.sh
 
-# Automated (via tag)
-git tag v0.3.0
-git push origin v0.3.0
-# GitHub Actions publishes automatically
-```
-
-### Packages (@vibe-devtools/*)
-
-```bash
-# Manual
+# Ou manualmente:
 cd packages/basic
-npm publish
+npm version patch  # 1.0.0 → 1.0.1
+cd ../research
+npm version patch
+cd ../..
 
-# Automated (via tag)
-git tag packages/basic/v1.0.1
-git push origin packages/basic/v1.0.1
-# GitHub Actions publishes automatically
+git add .
+git commit -m "chore: bump packages to 1.0.1"
+git push origin main
 
-# Or via workflow dispatch
-# Go to Actions → Publish packages → Run workflow → Select package
+# GitHub Actions publica automaticamente! 🚀
 ```
+
+**O workflow detecta mudanças em `package.json` e publica automaticamente.**
+
+### 📦 Via Tags (Releases Importantes)
+
+```bash
+# Para releases com tag git:
+cd packages/basic
+npm version minor  # 1.0.0 → 1.1.0
+cd ../..
+
+git add .
+git commit -m "feat: add new features to basic"
+git tag packages/basic/v1.1.0
+git push origin main
+git push origin packages/basic/v1.1.0
+
+# GitHub Actions publica via tag! 🚀
+```
+
+### 🎯 Via Workflow Dispatch (Manual)
+
+1. Ir para [GitHub Actions](https://github.com/onosendae/vibe-devtools/actions)
+2. Selecionar "Publish Packages to NPM"
+3. Click "Run workflow"
+4. Escolher package: `basic`, `research`, ou `all`
+5. Click "Run workflow"
+
+### 📖 Documentação Completa
+
+Ver [Workflows Guide](.github/workflows/WORKFLOWS-GUIDE.md) para detalhes completos sobre:
+- Como cada workflow funciona
+- Quando usar cada método
+- Troubleshooting
+- Best practices
 
 ---
 
