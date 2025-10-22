@@ -1,5 +1,5 @@
 {
-    "name": "vibes-cli",
+    "name": "vibe-devtools",
     "version": "0.4.0",
     "description": "CLI tool to install and manage vibes (agentic command packages)",
     "type": "module",

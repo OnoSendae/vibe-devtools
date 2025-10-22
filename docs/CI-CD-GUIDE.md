@@ -52,7 +52,7 @@ $ pnpm changeset
 ? Which packages would you like to include? 
   ◉ @vibe-devtools/basic
   ◯ @vibe-devtools/research
-  ◯ vibes-cli
+  ◯ vibe-devtools
 
 ? Which packages should have a major bump?
   ◯ @vibe-devtools/basic
@@ -494,7 +494,7 @@ Após merge:
 - [ ] Packages apareceram no npm:
   - https://www.npmjs.com/package/@vibe-devtools/basic
   - https://www.npmjs.com/package/@vibe-devtools/research
-  - https://www.npmjs.com/package/vibes-cli
+  - https://www.npmjs.com/package/vibe-devtools
 - [ ] GitHub Releases criadas
 - [ ] Tags git criadas
 

@@ -1,8 +1,8 @@
-# vibes-cli
+# vibe-devtools
 
 CLI tool to install and manage vibes (agentic command packages)
 
-[![npm version](https://badge.fury.io/js/vibes-cli.svg)](https://www.npmjs.com/package/vibes-cli)
+[![npm version](https://badge.fury.io/js/vibe-devtools.svg)](https://www.npmjs.com/package/vibe-devtools)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
@@ -46,7 +46,7 @@ npx vibes uninstall research
 ### Global Installation (Recommended)
 
 ```bash
-npm install -g vibes-cli
+npm install -g vibe-devtools
 ```
 
 Then use without npx:
@@ -262,7 +262,7 @@ vibes install ./my-vibe
 
 **Solution**:
 ```bash
-npm install -g vibes-cli
+npm install -g vibe-devtools
 # or use npx
 npx vibes <command>
 ```
@@ -310,9 +310,9 @@ MIT © Vibes Team
 
 ## 🔗 Links
 
-- **GitHub**: https://github.com/vibes-org/vibes-cli
-- **NPM**: https://www.npmjs.com/package/vibes-cli
-- **Documentation**: https://github.com/vibes-org/vibes-cli/wiki
+- **GitHub**: https://github.com/vibes-org/vibe-devtools
+- **NPM**: https://www.npmjs.com/package/vibe-devtools
+- **Documentation**: https://github.com/vibes-org/vibe-devtools/wiki
 - **Official Vibes**: https://github.com/vibes-org
 
 ---

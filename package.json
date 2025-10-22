@@ -16,9 +16,9 @@
         "clean": "pnpm -r clean && rm -rf node_modules",
         "publish:research": "pnpm --filter @vibes/research publish",
         "publish:basic": "pnpm --filter @vibes/basic publish",
-        "publish:cli": "pnpm --filter vibes-cli publish",
+        "publish:cli": "pnpm --filter vibe-devtools publish",
         "publish:all": "pnpm -r --filter './packages/**' publish",
-        "dev:cli": "pnpm --filter vibes-cli dev",
+        "dev:cli": "pnpm --filter vibe-devtools dev",
         "changeset": "changeset",
         "version-packages": "changeset version",
         "release": "changeset publish"

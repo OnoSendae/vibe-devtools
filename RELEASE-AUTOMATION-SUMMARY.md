@@ -299,7 +299,7 @@ Após primeiro merge de PR "Version Packages":
 2. Verificar packages no npm:
    - https://www.npmjs.com/package/@vibe-devtools/basic
    - https://www.npmjs.com/package/@vibe-devtools/research
-   - https://www.npmjs.com/package/vibes-cli
+   - https://www.npmjs.com/package/vibe-devtools
 3. Verificar GitHub Releases criadas
 4. Verificar CHANGELOG.md atualizado
 
