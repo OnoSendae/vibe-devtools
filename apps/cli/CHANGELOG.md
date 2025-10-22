@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0
+
+### Minor Changes
+
+- 0b7b6e8: Reescrever README completo da CLI em português brasileiro com narrativa inspiradora sobre IA agêntica, vibe coding e ferramentas inteligentes
+
 ## 0.4.1
 
 ### Patch Changes
