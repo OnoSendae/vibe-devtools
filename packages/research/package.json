@@ -1,6 +1,6 @@
 {
     "name": "@vibe-devtools/research",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Vibe DevTools Research Kit - Complete research pipelines (simple, deep, expert) for systematic investigation",
     "type": "module",
     "main": "index.js",
