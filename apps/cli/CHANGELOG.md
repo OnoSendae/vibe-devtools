@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.1
+
+### Patch Changes
+
+- 9477b16: Rename package from vibes-cli to vibe-devtools to match existing npm package and branding
+
 All notable changes to Vibe DevTools will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
@@ -16,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 **Breaking**: None (100% backward compatible)
 
 **Added**:
+
 - ✅ Multi-agent architecture with Adapter Pattern
 - ✅ Support for Cursor, Gemini CLI, Claude Code
 - ✅ Auto-detection of installed agents
@@ -25,17 +32,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ✅ Graceful degradation if agents not installed
 
 **Implementation**:
+
 - New `src/adapters/` directory with BaseAdapter system
 - AgentDetector for auto-detection
 - AdapterRegistry for adapter management
 - CursorAdapter, GeminiAdapter, ClaudeAdapter
 
 **Documentation**:
+
 - TESTING.md - Complete test plan
 - CREATING-ADAPTERS.md - Developer guide for new adapters
 - README updated with multi-agent examples
 
 **Behavior**:
+
 ```bash
 # Before v0.4.0
 vdt install @vibe-devtools/basic
@@ -165,4 +175,3 @@ vdt install @vibe-devtools/basic
 [0.3.1]: https://github.com/onosendae/vibe-devtools/compare/v0.2.0...v0.3.1
 [0.2.0]: https://github.com/onosendae/vibe-devtools/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/onosendae/vibe-devtools/releases/tag/v0.1.0
-
