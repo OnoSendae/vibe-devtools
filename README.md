@@ -29,35 +29,46 @@ Este é o **Vibe DevTools Ecosystem** — um monorepo completo que reúne **TUDO
 
 ## 🚀 Quick Start (2 Minutos para a Glória)
 
-### 1️⃣ Instalar CLI
+### Método 1: Instalação Global (Recomendado)
 
 ```bash
+# 1️⃣ Instalar CLI globalmente
 npm install -g vibe-devtools
-```
 
-### 2️⃣ Instalar Vibes Essenciais
-
-```bash
-# Kit fundacional - makers, planners, constitution
+# 2️⃣ Instalar vibes essenciais
 vdt install @vibe-devtools/basic
-
-# Pipelines de pesquisa acadêmica
 vdt install @vibe-devtools/research
+
+# 3️⃣ Verificar instalação
+vdt list
+
+# 4️⃣ Usar no Cursor/Claude/Gemini
+# /maker.command "criar componente React otimizado"
+# /research.deep.pipeline "TypeScript best practices 2025"
 ```
 
-### 3️⃣ Verificar Instalação
+**Vantagem**: Comando curto `vdt` sempre disponível.
+
+### Método 2: Via npx (Zero Instalação)
 
 ```bash
-vdt list
+# Usar diretamente sem instalar CLI
+npx vibe-devtools install @vibe-devtools/basic
+npx vibe-devtools install @vibe-devtools/research
+npx vibe-devtools list
+
+# Criar alias para facilitar
+alias vdt="npx vibe-devtools"
+vdt install @vibe-devtools/basic
 ```
 
-### 4️⃣ Usar no Cursor/Claude/Gemini
+**Vantagem**: Sempre usa versão latest, sem precisar atualizar.
 
-```
-/maker.command "criar componente React otimizado"
-/research.deep.pipeline "TypeScript best practices 2025"
-/planner.project "Migrar para Next.js 15"
-```
+### 🔥 Qual Escolher?
+
+- **Global**: Se vai usar frequentemente (recomendado)
+- **npx**: Se quer testar primeiro ou quer sempre latest
+- **Ambos**: Use npx para experimentar, depois instale global
 
 **🎉 Pronto! Você já está no futuro do desenvolvimento!**
 
@@ -114,13 +125,21 @@ Uma CLI moderna que transforma seu ambiente de desenvolvimento em uma **central 
 ### 💻 Comandos Principais
 
 ```bash
-# Instalação
+# Instalação (npm packages) ⭐ NOVO!
 vdt install @vibe-devtools/basic          # Do npm
+npx vibe-devtools install @vibe-devtools/research  # Via npx
+
+# Instalação (GitHub)
 vdt install github:you/custom-vibe        # Do GitHub  
+npx vibe-devtools install github:you/vibe # Via npx
+
+# Instalação (local)
 vdt install ./local-vibe                  # Local dev
+npx vibe-devtools install ./my-vibe       # Via npx
 
 # Gestão
 vdt list                                  # Ver instalados
+npx vibe-devtools list                    # Via npx
 vdt uninstall basic                       # Remover
 vdt update basic                          # Atualizar (soon)
 
@@ -128,6 +147,8 @@ vdt update basic                          # Atualizar (soon)
 vdt --version                             # Versão CLI
 vdt --help                                # Ajuda
 ```
+
+**💡 npx vs global**: Use `npx` para sempre ter latest, ou instale global para comando mais curto.
 
 ### 📚 Documentação
 
@@ -1008,6 +1029,8 @@ MIT © 2025 [Ono Sendae](https://github.com/onosendae)
 
 ## 🎉 Quickstart Absoluto
 
+### Com Instalação Global
+
 ```bash
 # 30 segundos para mudar sua vida
 
@@ -1028,6 +1051,24 @@ vdt list
 
 # 🚀 Welcome to the future!
 ```
+
+### SEM Instalação (npx) ⭐ MAIS RÁPIDO
+
+```bash
+# 20 segundos para mudar sua vida (zero instalação!)
+
+npx vibe-devtools install @vibe-devtools/basic
+npx vibe-devtools install @vibe-devtools/research
+npx vibe-devtools list
+
+# Usar no Cursor
+# /maker.command
+# /research.simple.pipeline
+
+# 🚀 Welcome to the future - via npx!
+```
+
+**🔥 Diferença**: npx não instala CLI, sempre usa latest automaticamente!
 
 ---
 

@@ -95,27 +95,34 @@ vdt install @vibe-devtools/basic
 
 ## 🚀 Quick Start
 
-### 1. Instalar CLI
+### Opção A: Instalação Global (Recomendado)
 
 ```bash
+# 1. Instalar CLI globalmente
 npm install -g vibe-devtools
-```
 
-### 2. Instalar Seu Primeiro Vibe
-
-```bash
-# Kit fundacional - makers, planners, governance
+# 2. Usar comando curto (vdt)
 vdt install @vibe-devtools/basic
-
-# Pipelines de pesquisa acadêmica
 vdt install @vibe-devtools/research
-```
-
-### 3. Ver o Que Você Tem
-
-```bash
 vdt list
 ```
+
+**Vantagem**: Comando curto `vdt` sempre disponível.
+
+### Opção B: Via npx (Sem Instalar)
+
+```bash
+# Usar diretamente sem instalar
+npx vibe-devtools install @vibe-devtools/basic
+npx vibe-devtools install @vibe-devtools/research
+npx vibe-devtools list
+
+# Ou criar alias para facilitar
+alias vdt="npx vibe-devtools"
+vdt install @vibe-devtools/basic
+```
+
+**Vantagem**: Sempre usa a versão mais recente, sem precisar atualizar.
 
 ```
 📦 Vibes Instalados
@@ -411,18 +418,24 @@ vdt install @yourcompany/dev-standards
 ### Instalação
 
 ```bash
-# Do npm (oficial)
+# Do npm (oficial) ⭐ NOVO!
 vdt install @vibe-devtools/basic
+npx vibe-devtools install @vibe-devtools/research
 
 # Do GitHub
 vdt install github:onosendae/my-vibe
+npx vibe-devtools install github:onosendae/my-vibe
 
 # Local (desenvolvimento)
 vdt install ./my-vibe
+npx vibe-devtools install ./my-vibe
 
 # Com versão específica
 vdt install @vibe-devtools/basic@1.0.0
+npx vibe-devtools install @vibe-devtools/basic@1.0.1
 ```
+
+**💡 Dica**: `npx` sempre baixa a versão mais recente do CLI!
 
 ### Listagem
 
@@ -631,9 +644,9 @@ MIT © 2025 [Ono Sendae](https://github.com/onosendae)
 
 ## 🎁 Bonus: Quickstart Total
 
-```bash
-# 1 minuto para estar produtivo
+### Via Instalação Global (1 minuto)
 
+```bash
 # Instalar CLI
 npm i -g vibe-devtools
 
@@ -649,5 +662,21 @@ vdt list
 
 # 🎉 Pronto! Bem-vindo ao futuro do desenvolvimento!
 ```
+
+### Via npx (SEM Instalar - 30 segundos)
+
+```bash
+# Usar diretamente (sempre versão latest)
+npx vibe-devtools install @vibe-devtools/basic
+npx vibe-devtools install @vibe-devtools/research
+npx vibe-devtools list
+
+# Usar no Cursor
+# /maker.command "criar meu primeiro command"
+
+# 🎉 Ainda mais rápido! Zero instalação!
+```
+
+**🔥 Pro tip**: Combine os dois! Use `npx` para experimentar, depois instale globalmente se gostar.
 
 **Divirta-se criando! 🚀✨**

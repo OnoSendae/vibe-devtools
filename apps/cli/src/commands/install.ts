@@ -4,6 +4,7 @@ import path from 'node:path';
 import chalk from 'chalk';
 import ora from 'ora';
 import { installFromGitHub, type VibeManifest } from '../installers/github-installer.js';
+import { installFromNpm } from '../installers/npm-installer.js';
 import { createSymlink, getVibesHome, getVibePackageDir } from '../utils/symlink-manager.js';
 import { AdapterRegistry, AgentDetector, type VibePackage, type TargetPaths } from '../adapters/index.js';
 
@@ -116,11 +117,6 @@ export async function installCommand(
 
         const sourceType = detectSource(source);
 
-        if (sourceType !== 'github' && sourceType !== 'local') {
-            spinner.fail(chalk.red('npm and local sources not yet implemented. Use GitHub URL.'));
-            return;
-        }
-
         spinner.text = 'Downloading vibe...';
 
         let manifest: VibeManifest;
@@ -128,6 +124,10 @@ export async function installCommand(
 
         if (sourceType === 'github') {
             const result = await installFromGitHub(source);
+            manifest = result.manifest;
+            installedPath = result.installedPath;
+        } else if (sourceType === 'npm') {
+            const result = await installFromNpm(source);
             manifest = result.manifest;
             installedPath = result.installedPath;
         } else {
