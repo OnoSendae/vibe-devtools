@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { installFromGitHub, type VibeManifest } from '../installers/github-installer.js';
 import { createSymlink, getVibesHome, getVibePackageDir } from '../utils/symlink-manager.js';
+import { AdapterRegistry, AgentDetector, type VibePackage, type TargetPaths } from '../adapters/index.js';
 
 interface GlobalManifest {
     version: string;
@@ -105,7 +106,8 @@ async function createVibeSymlinks(
 }
 
 export async function installCommand(
-    source: string
+    source: string,
+    options: { conflict?: string; agent?: string } = {}
 ): Promise<void> {
     const spinner = ora('Installing vibe...').start();
 
@@ -145,10 +147,56 @@ export async function installCommand(
             await fs.cp(absolutePath, installedPath, { recursive: true });
         }
 
-        spinner.text = 'Creating symlinks...';
+        spinner.text = 'Detecting agents...';
 
         const projectRoot = process.cwd();
-        const symlinks = await createVibeSymlinks(
+        const adapters = AdapterRegistry.getAllAdapters();
+        const detector = new AgentDetector(adapters);
+        let detectedAgents = await detector.detectAll();
+
+        if (detectedAgents.length === 0) {
+            spinner.warn(chalk.yellow('No agents detected, using Cursor as fallback'));
+            const cursorAdapter = AdapterRegistry.getAdapter('cursor');
+            if (cursorAdapter) {
+                detectedAgents = [{
+                    name: 'cursor',
+                    adapter: cursorAdapter,
+                    paths: cursorAdapter.getTargetPaths()
+                }];
+            }
+        }
+
+        if (options.agent) {
+            const requestedAgents = options.agent.split(',').map(a => a.trim());
+            detectedAgents = detectedAgents.filter(a => requestedAgents.includes(a.name));
+
+            if (detectedAgents.length === 0) {
+                throw new Error(`Requested agents (${options.agent}) are not installed`);
+            }
+        }
+
+        spinner.text = 'Installing for agents...';
+
+        const vibePackage: VibePackage = {
+            name: manifest.name,
+            version: manifest.version,
+            path: installedPath,
+            agentTargets: manifest.agentTargets as Record<string, TargetPaths> | undefined,
+            symlinks: manifest.symlinks
+        };
+
+        const installedForAgents: string[] = [];
+
+        for (const agent of detectedAgents) {
+            try {
+                await agent.adapter.install(vibePackage, projectRoot);
+                installedForAgents.push(agent.name);
+            } catch (error) {
+                console.warn(chalk.yellow(`Warning: Failed to install for ${agent.name}: ${(error as Error).message}`));
+            }
+        }
+
+        const projectSymlinks = await createVibeSymlinks(
             manifest.name,
             manifest.version,
             manifest,
@@ -163,7 +211,7 @@ export async function installCommand(
             version: manifest.version,
             source: source,
             installedAt: new Date().toISOString(),
-            symlinks
+            symlinks: projectSymlinks
         };
 
         if (!globalManifest.projects[projectRoot]) {
@@ -184,9 +232,10 @@ export async function installCommand(
         console.log('');
         console.log(chalk.bold('📦 Installed:'), chalk.cyan(`${manifest.name}@${manifest.version}`));
         console.log(chalk.bold('📂 Location:'), installedPath);
-        console.log(chalk.bold('🔗 Symlinks:'), Object.keys(symlinks).length);
+        console.log(chalk.bold('🤖 Agents:'), chalk.green(installedForAgents.join(', ')));
+        console.log(chalk.bold('🔗 Symlinks:'), Object.keys(projectSymlinks).length);
         console.log('');
-        console.log(chalk.gray('Run'), chalk.cyan(`vibes list`), chalk.gray('to see all installed vibes'));
+        console.log(chalk.gray('Run'), chalk.cyan(`vdt agents detect`), chalk.gray('to see all detected agents'));
 
     } catch (error) {
         spinner.fail(chalk.red(`Installation failed: ${(error as Error).message}`));
