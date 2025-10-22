@@ -125,17 +125,32 @@ Cursor/Copilot/Gemini
 
 ## 📦 Instalação
 
-### Pré-requisito
+### Método 1: Via CLI Instalada (Recomendado)
 
 ```bash
+# 1. Instalar CLI globalmente
 npm install -g vibe-devtools
+
+# 2. Instalar basic
+vdt install @vibe-devtools/basic
+
+# 3. Pronto!
 ```
 
-### Instalar Basic
+### Método 2: Via npx (Zero Instalação) ⭐
 
 ```bash
-vdt install @vibe-devtools/basic
+# Instalar diretamente sem ter a CLI
+npx vibe-devtools install @vibe-devtools/basic
+
+# Pronto! Sem pré-requisito de CLI global.
 ```
+
+### 🔥 Qual Escolher?
+
+- **CLI Global**: Se vai usar vários vibes frequentemente
+- **npx**: Para experimentar ou instalação única
+- **Pro tip**: Use npx para testar, depois instale CLI se gostar
 
 ---
 

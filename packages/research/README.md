@@ -117,17 +117,32 @@ Este vibe foi criado usando **@vibe-devtools/basic**:
 
 ## 📦 Instalação
 
-### Pré-requisito
+### Método 1: Via CLI Instalada (Recomendado)
 
 ```bash
+# 1. Instalar CLI globalmente
 npm install -g vibe-devtools
+
+# 2. Instalar research
+vdt install @vibe-devtools/research
+
+# 3. Pronto!
 ```
 
-### Instalar Research
+### Método 2: Via npx (Zero Instalação) ⭐
 
 ```bash
-vdt install @vibe-devtools/research
+# Instalar diretamente sem ter a CLI
+npx vibe-devtools install @vibe-devtools/research
+
+# Pronto! Sem pré-requisito de CLI global.
 ```
+
+### 🔥 Qual Escolher?
+
+- **CLI Global**: Se vai fazer várias pesquisas (recomendado)
+- **npx**: Para testar pipelines ou uso esporádico
+- **Pro tip**: Use npx para experimentar, depois instale CLI se gostar
 
 ---
 
