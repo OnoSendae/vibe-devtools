@@ -149,3 +149,4 @@ pnpm changeset publish
 - ❌ NUNCA bump versions manualmente
 - ❌ NUNCA publique localmente (use GitHub Actions)
 
+
