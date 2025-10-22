@@ -1,4 +1,4 @@
-name: Publish @vibe-devtools packages to NPM
+name: ⚠️ DEPRECATED - Publish Packages via Tags (Use Changesets)
 
 on:
   push:

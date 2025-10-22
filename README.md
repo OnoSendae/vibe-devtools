@@ -85,6 +85,16 @@ vibe-devtools/
 
 ## 🔧 Development
 
+### Setup
+
+```bash
+pnpm install
+
+# ⚠️ Se aparecer warning sobre "Ignored build scripts: esbuild"
+# É seguro ignorar - feature de segurança do pnpm
+# Ou aprovar: pnpm approve-builds esbuild
+```
+
 ### Build CLI
 
 ```bash
@@ -109,64 +119,72 @@ npm test
 
 ---
 
-## 🚀 Publishing
+## 🚀 Publishing (Changesets Workflow)
 
-### 📋 Método Recomendado (Automático)
+Este projeto usa [Changesets](https://github.com/changesets/changesets) para versioning e publicação **completamente automáticos**.
 
-**Para atualizar READMEs ou fazer patches:**
-
-```bash
-# Usar helper script (recomendado)
-./scripts/publish-helper.sh
-
-# Ou manualmente:
-cd packages/basic
-npm version patch  # 1.0.0 → 1.0.1
-cd ../research
-npm version patch
-cd ../..
-
-git add .
-git commit -m "chore: bump packages to 1.0.1"
-git push origin main
-
-# GitHub Actions publica automaticamente! 🚀
-```
-
-**O workflow detecta mudanças em `package.json` e publica automaticamente.**
-
-### 📦 Via Tags (Releases Importantes)
+### 🎯 Fluxo Simples
 
 ```bash
-# Para releases com tag git:
-cd packages/basic
-npm version minor  # 1.0.0 → 1.1.0
-cd ../..
+# 1. Fazer mudanças
+vi packages/basic/README.md
 
+# 2. Criar changeset (descreve a mudança)
+pnpm changeset
+# → Seleciona package
+# → Escolhe tipo: patch/minor/major
+# → Escreve resumo
+
+# 3. Commit e push
 git add .
-git commit -m "feat: add new features to basic"
-git tag packages/basic/v1.1.0
+git commit -m "docs: update README"
 git push origin main
-git push origin packages/basic/v1.1.0
 
-# GitHub Actions publica via tag! 🚀
+# 4. Workflow automático:
+# → Cria PR "Version Packages"
+# → Mostra preview de versions
+
+# 5. Mergear PR quando pronto
+# → Publica no npm automaticamente
+# → Cria GitHub Releases
+# → Atualiza CHANGELOGs
+# → ✅ DONE!
 ```
 
-### 🎯 Via Workflow Dispatch (Manual)
+### 📋 Guia Rápido
 
-1. Ir para [GitHub Actions](https://github.com/onosendae/vibe-devtools/actions)
-2. Selecionar "Publish Packages to NPM"
-3. Click "Run workflow"
-4. Escolher package: `basic`, `research`, ou `all`
-5. Click "Run workflow"
+**Atualizar docs (patch):**
+```bash
+pnpm changeset
+# basic → patch → "Fix typos in README"
+git push
+```
+
+**Nova feature (minor):**
+```bash
+pnpm changeset
+# research → minor → "Add new research command"
+git push
+```
+
+**Breaking change (major):**
+```bash
+pnpm changeset
+# cli → major → "BREAKING: change command syntax"
+git push
+```
 
 ### 📖 Documentação Completa
 
-Ver [Workflows Guide](.github/workflows/WORKFLOWS-GUIDE.md) para detalhes completos sobre:
-- Como cada workflow funciona
-- Quando usar cada método
+Ver [CI/CD Guide](./docs/CI-CD-GUIDE.md) para:
+- Fluxo detalhado
 - Troubleshooting
-- Best practices
+- Múltiplos packages
+- Configuração de secrets
+
+### ⚠️ Workflows Antigos (Deprecated)
+
+Os workflows manuais (`publish.yml`, `publish-cli.yml`) ainda existem para emergências, mas **USE CHANGESETS** para publicações normais.
 
 ---
 

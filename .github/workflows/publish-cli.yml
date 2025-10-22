@@ -1,4 +1,4 @@
-name: Publish Vibe DevTools CLI to NPM
+name: ⚠️ DEPRECATED - Publish CLI via Tags (Use Changesets)
 
 on:
   push:
