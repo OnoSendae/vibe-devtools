@@ -101,13 +101,20 @@ vdt install @vibe-devtools/basic
 # 1. Instalar CLI globalmente
 npm install -g vibe-devtools
 
-# 2. Usar comando curto (vdt)
+# 2. Usar comandos disponíveis (vdt ou vibes)
 vdt install @vibe-devtools/basic
 vdt install @vibe-devtools/research
 vdt list
+
+# Ou usar nome completo
+vibes install @vibe-devtools/basic
+vibes list
 ```
 
-**Vantagem**: Comando curto `vdt` sempre disponível.
+**Vantagens**: 
+- ✅ Comandos `vdt` (curto) e `vibes` (descritivo) disponíveis
+- ✅ Instalado uma vez, usa sempre
+- ✅ Mais rápido que npx
 
 ### Opção B: Via npx (Sem Instalar)
 
@@ -122,7 +129,11 @@ alias vdt="npx vibe-devtools"
 vdt install @vibe-devtools/basic
 ```
 
-**Vantagem**: Sempre usa a versão mais recente, sem precisar atualizar.
+**Vantagens**: 
+- ✅ Sempre usa a versão mais recente automaticamente
+- ✅ Zero instalação necessária
+- ✅ Perfeito para CI/CD e automações
+- ✅ Testa antes de instalar globalmente
 
 ```
 📦 Vibes Instalados
@@ -677,6 +688,28 @@ npx vibe-devtools list
 # 🎉 Ainda mais rápido! Zero instalação!
 ```
 
-**🔥 Pro tip**: Combine os dois! Use `npx` para experimentar, depois instale globalmente se gostar.
+### Opção C: Alias npx para vdt (Melhor dos Dois Mundos) ⭐
+
+```bash
+# Adicionar ao seu ~/.zshrc ou ~/.bashrc
+alias vdt="npx vibe-devtools"
+alias vibes="npx vibe-devtools"
+
+# Recarregar shell
+source ~/.zshrc  # ou source ~/.bashrc
+
+# Usar como se estivesse instalado
+vdt install @vibe-devtools/basic
+vdt list
+vibes install @vibe-devtools/research
+```
+
+**Vantagens**: 
+- ✅ Comandos curtos (`vdt` e `vibes`)
+- ✅ Sempre usa versão mais recente
+- ✅ Zero instalação global
+- ✅ Funciona igual ao instalado
+
+**🔥 Pro tip**: Esta é a melhor opção! Comandos rápidos + sempre atualizado!
 
 **Divirta-se criando! 🚀✨**

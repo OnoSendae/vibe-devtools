@@ -5,7 +5,8 @@
     "type": "module",
     "main": "dist/index.js",
     "bin": {
-        "vibes": "./dist/index.js"
+        "vibes": "./dist/index.js",
+        "vdt": "./dist/index.js"
     },
     "files": [
         "dist/"
