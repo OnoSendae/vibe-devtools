@@ -1,6 +1,6 @@
 {
     "name": "@vibe-devtools/basic",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Vibe DevTools Basic Kit - Foundation tools for building and planning (makers, planners, constitution)",
     "type": "module",
     "main": "index.js",

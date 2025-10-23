@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.1
+
+### Patch Changes
+
+- 356b559: Update installation documentation to include npx examples
+  - Add npx installation method alongside global CLI
+  - Provide clear comparison: global vs npx
+  - Show both methods in installation section
+  - Add pro tips for choosing best method
+  - Consistent with CLI and monorepo README updates
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
@@ -10,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 **Commands** (12 total):
+
 - `research.pipeline.md` - Unified pipeline with 3 modes (simple/deep/expert)
 - `research.initialize.md` - Initialize research with structured metadata
 - `research.search.md` - Search and collect references
@@ -24,18 +36,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `research.expert.pipeline.md` - Expert mode pipeline (deprecated)
 
 **Rules** (4 total):
+
 - `research.mdc` - Core research governance
 - `analysis.mdc` - Analysis patterns and best practices
 - `search.mdc` - Search strategies and quality criteria
 - `synthesis.mdc` - Synthesis methodologies
 
 **Templates** (4 total):
+
 - `template.research-metadata.json` - Metadata schema with validation
 - `template.research-synthesis.md` - Synthesis structure
 - `template.research-reference-analysis.md` - Reference analysis template
 - `template.research-report.md` - Final report structure
 
 **Documentation**:
+
 - `README.md` - Complete documentation with quick start
 - `constitution.md` - Research principles and rules
 - `IMPLEMENTACAO-COMPLETA.md` - Implementation history
@@ -45,6 +60,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `examples/basic-research-example.md` - Beginner tutorial
 
 **Distribution**:
+
 - `vibe.json` - Vibe manifest for CLI installation
 - `package.json` - NPM manifest for registry publication
 
@@ -84,4 +100,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [2.0.0]: https://github.com/vibes-org/research/releases/tag/v2.0.0
 [1.0.0]: https://github.com/vibes-org/research/releases/tag/v1.0.0
-
