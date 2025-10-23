@@ -92,12 +92,16 @@ jobs:
               RELEASE_NOTES="Release ${VERSION} of ${NAME}"
             fi
             
-            gh release create "$TAG" \
-              --title "${NAME}@${VERSION}" \
-              --notes "$RELEASE_NOTES" \
-              --target main
-            
-            echo "✅ Created release: $TAG"
+            if gh release view "$TAG" &>/dev/null; then
+              echo "⚠️  Release $TAG already exists, skipping..."
+            else
+              gh release create "$TAG" \
+                --title "${NAME}@${VERSION}" \
+                --notes "$RELEASE_NOTES" \
+                --target main
+              
+              echo "✅ Created release: $TAG"
+            fi
           done
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
