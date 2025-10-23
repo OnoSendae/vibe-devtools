@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.7.0
+
+### Minor Changes
+
+- dc5f6e5: Add GitHub Copilot adapter support
+  - Implement CopilotAdapter for GitHub Copilot integration
+  - Auto-detect GitHub Copilot installation via VSCode extensions
+  - Generate `.github/copilot-instructions.md` with vibe commands and rules
+  - Enable Copilot to understand and use vibe commands in projects
+  - Full compatibility with existing Cursor, Gemini, and Claude adapters
+
 ## 0.6.0
 
 ### Minor Changes
