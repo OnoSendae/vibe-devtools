@@ -63,6 +63,23 @@ export async function updateCommand(
         dryRun?: boolean;
     } = {}
 ): Promise<void> {
+    const projectRoot = path.resolve(process.cwd());
+    const criticalPaths = [
+        '/', '/usr', '/etc', '/var', '/System', '/Library', '/bin', '/sbin', '/opt', '/boot',
+        '/private/etc', '/private/var', '/private/tmp'
+    ];
+    
+    const isCriticalDir = criticalPaths.some(critical => {
+        const resolvedCritical = path.resolve(critical);
+        return projectRoot === resolvedCritical || projectRoot.startsWith(resolvedCritical + path.sep);
+    });
+    
+    if (isCriticalDir) {
+        console.error(chalk.red(`❌ Cannot update in critical system directory: ${projectRoot}`));
+        console.error(chalk.yellow('Please run from a safe project directory.'));
+        throw new Error(`Update blocked: critical system directory`);
+    }
+    
     const spinner = ora('Updating vibe...').start();
 
     try {
@@ -92,7 +109,6 @@ export async function updateCommand(
             vibeManifest = result.manifest;
         }
 
-        const projectRoot = process.cwd();
         const vibeDir = getVibePackageDir(vibeManifest.name, vibeManifest.version);
 
         if (!vibeManifest.symlinks) {

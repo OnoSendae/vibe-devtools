@@ -158,6 +158,23 @@ export async function installCommand(
     source: string,
     options: { conflict?: string; agent?: string; dryRun?: boolean } = {}
 ): Promise<void> {
+    const projectRoot = path.resolve(process.cwd());
+    const criticalPaths = [
+        '/', '/usr', '/etc', '/var', '/System', '/Library', '/bin', '/sbin', '/opt', '/boot',
+        '/private/etc', '/private/var', '/private/tmp'
+    ];
+    
+    const isCriticalDir = criticalPaths.some(critical => {
+        const resolvedCritical = path.resolve(critical);
+        return projectRoot === resolvedCritical || projectRoot.startsWith(resolvedCritical + path.sep);
+    });
+    
+    if (isCriticalDir) {
+        console.error(chalk.red(`❌ Cannot install in critical system directory: ${projectRoot}`));
+        console.error(chalk.yellow('Please run from a safe project directory.'));
+        throw new Error(`Installation blocked: critical system directory`);
+    }
+    
     const spinner = ora('Installing vibe...').start();
 
     try {
@@ -197,7 +214,6 @@ export async function installCommand(
 
         spinner.text = 'Detecting agents...';
 
-        const projectRoot = process.cwd();
         const adapters = AdapterRegistry.getAllAdapters();
         const detector = new AgentDetector(adapters);
         let detectedAgents = await detector.detectAll();
