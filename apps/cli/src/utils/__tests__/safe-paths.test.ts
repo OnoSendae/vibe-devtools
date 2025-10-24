@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, afterEach } from 'vitest';
 import { getCriticalSystemPaths, isCriticalSystemDirectory, isUserHomeDirectory } from '../safe-paths.js';
 import os from 'node:os';
 import path from 'node:path';
