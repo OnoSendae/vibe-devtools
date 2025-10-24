@@ -151,12 +151,95 @@ export async function stashDiffCommand(stashId: string, _options: { editor?: boo
     console.log('');
 }
 
-export async function stashSaveCommand(_files?: string[]): Promise<void> {
-    throw new Error('Not implemented yet - will be implemented in TASK-039');
+export async function stashSaveCommand(files?: string[]): Promise<void> {
+    let filesToStash: string[] = files || [];
+
+    if (filesToStash.length === 0) {
+        const prompts = await import('prompts');
+        const response = await prompts.default({
+            type: 'text',
+            name: 'files',
+            message: 'Enter file paths to stash (comma-separated):',
+            validate: (value: string) => value.trim().length > 0 || 'Please enter at least one file'
+        });
+
+        if (!response.files) {
+            console.log(chalk.gray('Cancelled'));
+            return;
+        }
+
+        filesToStash = response.files.split(',').map((f: string) => f.trim());
+    }
+
+    const existingFiles: string[] = [];
+    for (const file of filesToStash) {
+        const fs = await import('node:fs');
+        if (fs.existsSync(file)) {
+            existingFiles.push(file);
+        } else {
+            console.log(chalk.yellow(`⚠️  File not found: ${file}`));
+        }
+    }
+
+    if (existingFiles.length === 0) {
+        console.log(chalk.red('No valid files to stash'));
+        return;
+    }
+
+    const manager = new StashManager();
+    const filesToStashMap = new Map(
+        existingFiles.map(f => [f, f])
+    );
+
+    const stashId = await manager.create(filesToStashMap, {
+        reason: 'manual'
+    });
+
+    console.log('');
+    console.log(chalk.green(`✓ Stash {${stashId}} created`));
+    console.log(chalk.gray(`  Files: ${existingFiles.length}`));
+    console.log('');
+
+    for (const file of existingFiles) {
+        console.log(chalk.gray('  -'), file);
+    }
+
+    console.log('');
 }
 
-export async function stashClearCommand(_options: { force?: boolean } = {}): Promise<void> {
-    throw new Error('Not implemented yet - will be implemented in TASK-040');
+export async function stashClearCommand(options: { force?: boolean } = {}): Promise<void> {
+    const manager = new StashManager();
+    const stashes = await manager.list();
+
+    if (stashes.length === 0) {
+        console.log(chalk.gray('No stashes to clear'));
+        return;
+    }
+
+    if (!options.force) {
+        console.log('');
+        console.log(chalk.yellow(`⚠️  About to remove ${stashes.length} stashes`));
+        console.log('');
+
+        const prompts = await import('prompts');
+        const response = await prompts.default({
+            type: 'text',
+            name: 'confirm',
+            message: 'Type "yes" to confirm:',
+            validate: (value: string) => value === 'yes' || 'Please type "yes" to confirm'
+        });
+
+        if (response.confirm !== 'yes') {
+            console.log(chalk.gray('Cancelled'));
+            return;
+        }
+    }
+
+    await manager.clear(true);
+
+    console.log('');
+    console.log(chalk.green(`✓ ${stashes.length} stashes cleared`));
+    console.log('');
 }
 
 function formatSize(bytes: number): string {

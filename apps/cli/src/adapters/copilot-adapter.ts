@@ -139,7 +139,7 @@ export class CopilotAdapter extends BaseAdapter {
             const promptPath = path.join(promptsDir, `${cmdName}.prompt.md`);
 
             let content = `# ${cmdName} Command Prompt\n\n`;
-            
+
             if (frontmatter.description) {
                 content += `**Description**: ${frontmatter.description}\n\n`;
             }
