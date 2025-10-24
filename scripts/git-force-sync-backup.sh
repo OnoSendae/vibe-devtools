@@ -16,7 +16,7 @@ fi
 echo ""
 echo "🔄 Sincronizando TODAS as branches..."
 
-git fetch origin --all
+git fetch --all
 
 for branch in $(git branch -r | grep 'origin/' | grep -v 'HEAD' | sed 's/origin\///'); do
     echo ""
