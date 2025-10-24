@@ -9,6 +9,7 @@ import { getVibesHome, getVibePackageDir } from '../utils/symlink-manager.js';
 import { ConflictDetector } from '../stash/conflict-detector.js';
 import { ConflictResolver } from '../stash/conflict-resolver.js';
 import { StashManager } from '../stash/stash-manager.js';
+import { isCriticalSystemDirectory } from '../utils/safe-paths.js';
 
 interface GlobalManifest {
     version: string;
@@ -63,6 +64,14 @@ export async function updateCommand(
         dryRun?: boolean;
     } = {}
 ): Promise<void> {
+    const projectRoot = path.resolve(process.cwd());
+    
+    if (isCriticalSystemDirectory(projectRoot)) {
+        console.error(chalk.red(`❌ Cannot update in critical system directory: ${projectRoot}`));
+        console.error(chalk.yellow('Please run from a safe project directory.'));
+        throw new Error(`Update blocked: critical system directory`);
+    }
+    
     const spinner = ora('Updating vibe...').start();
 
     try {
@@ -92,7 +101,6 @@ export async function updateCommand(
             vibeManifest = result.manifest;
         }
 
-        const projectRoot = process.cwd();
         const vibeDir = getVibePackageDir(vibeManifest.name, vibeManifest.version);
 
         if (!vibeManifest.symlinks) {

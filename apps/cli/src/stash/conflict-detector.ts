@@ -1,5 +1,6 @@
 import { existsSync, statSync } from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { HashCalculator } from './hash-calculator.js';
 
 export interface Conflict {
@@ -68,7 +69,9 @@ export class ConflictDetector {
         if (stats.isDirectory()) {
             const hashes = await this.hashCalculator.calculateDirectory(filePath);
             const allHashes = Array.from(hashes.values()).join('');
-            return this.hashCalculator.calculateFile(Buffer.from(allHashes) as any) || allHashes.substring(0, 64);
+            const hash = crypto.createHash('sha256');
+            hash.update(allHashes);
+            return hash.digest('hex');
         }
 
         return this.hashCalculator.calculateFile(filePath);
