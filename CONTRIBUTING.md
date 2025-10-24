@@ -26,7 +26,7 @@ Obrigado pelo interesse em contribuir para o **Vibe DevTools**! Este documento d
 
 Este projeto adota o [Contributor Covenant Code of Conduct](./CODE_OF_CONDUCT.md). Ao participar, você concorda em respeitar este código.
 
-Por favor, reporte comportamentos inaceitáveis para [cleberhensel@gmail.com](mailto:cleberhensel@gmail.com).
+Por favor, reporte comportamentos inaceitáveis para [clebercleberhensel@gmail.com](mailto:clebercleberhensel@gmail.com).
 
 ---
 
@@ -778,7 +778,7 @@ Ao contribuir, você concorda que suas contribuições serão licenciadas sob a 
 ## Dúvidas?
 
 - **GitHub Discussions**: https://github.com/onosendae/vibe-devtools/discussions
-- **Email**: cleberhensel@gmail.com
+- **Email**: clebercleberhensel@gmail.com
 
 ---
 

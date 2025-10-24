@@ -31,7 +31,7 @@ Levamos a segurança do Vibe DevTools a sério. Se você descobriu uma vulnerabi
 
 Em vez disso, envie um relatório privado para:
 
-📧 **Email**: cleberhensel@gmail.com
+📧 **Email**: clebercleberhensel@gmail.com
 
 **Assunto**: `[SECURITY] Vibe DevTools - [descrição breve]`
 
@@ -250,7 +250,7 @@ vdt update --all
 
 Para questões de segurança:
 
-📧 **Email**: cleberhensel@gmail.com  
+📧 **Email**: clebercleberhensel@gmail.com  
 🔒 **Assunto**: `[SECURITY] ...`
 
 Para outras questões:
