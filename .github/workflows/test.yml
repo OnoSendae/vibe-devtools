@@ -1,0 +1,74 @@
+name: Test vibe-devtools
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test-cli:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build CLI
+        run: pnpm --filter vibe-devtools build
+
+      - name: Test CLI
+        run: |
+          cd apps/cli
+          node dist/index.js --version
+          node dist/index.js --help
+
+  test-packages:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: [basic, research]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate package
+        run: |
+          cd packages/${{ matrix.package }}
+          
+          # Check vibe.json exists
+          if [ ! -f "vibe.json" ]; then
+            echo "❌ vibe.json not found"
+            exit 1
+          fi
+          
+          # Validate vibe.json
+          node -e "JSON.parse(require('fs').readFileSync('vibe.json', 'utf-8'))"
+          
+          # Check package.json
+          if [ ! -f "package.json" ]; then
+            echo "❌ package.json not found"
+            exit 1
+          fi
+          
+          echo "✅ Package ${{ matrix.package }} is valid"

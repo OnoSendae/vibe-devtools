@@ -1,0 +1,239 @@
+# Rules: Creation and Structure Standards
+
+## Principle
+
+Rules DEVEM ser declarativas, testáveis, específicas e baseadas em best practices oficiais. Uma rule define O QUE fazer, não COMO fazer (isso é responsabilidade dos commands).
+
+## Guidance
+
+### DO (Fazer)
+
+- **Estrutura Obrigatória**:
+  ```markdown
+  # [Category]: [Rule Name]
+  
+  ## Principle
+  [Qual valor/princípio esta rule implementa]
+  
+  ## Guidance
+  
+  ### DO (Fazer)
+  - [Padrão correto 1]
+  - [Padrão correto 2]
+  
+  ### DON'T (Não Fazer)
+  - [Anti-pattern 1]
+  - [Anti-pattern 2]
+  
+  ## Examples
+  
+  ### ✅ Good
+  ```[language]
+  [código/exemplo correto]
+  ```
+  
+  ### ❌ Bad
+  ```[language]
+  [código/exemplo incorreto]
+  ```
+  **Problemas**: [Lista de problemas específicos]
+  
+  ## Rationale
+  [Por que esta rule existe, tradeoffs, contexto]
+  
+  ## Enforcement
+  [Como validar compliance: linters, CI/CD, code review]
+  
+  ## References
+  - [Link para documentação oficial]
+  - [Link para discussion/RFC]
+  ```
+
+- **Linguagem Prescritiva**:
+  - DEVE (MUST): Obrigatório, não-negociável
+  - DEVERIA (SHOULD): Fortemente recomendado
+  - PODE (MAY): Opcional, contextual
+
+- **Testabilidade Objetiva**:
+  - Rule DEVE ser verificável sem ambiguidade
+  - "Function DEVE ter max 50 linhas" ✅
+  - "Function should be reasonable size" ❌
+
+- **Examples com Code Real**:
+  - Sempre mostrar Good vs Bad
+  - Use code real do projeto (não pseudo-code)
+  - Explique EXATAMENTE por que Bad é ruim
+
+- **Base em Official Docs**:
+  - Referenciar documentação oficial quando possível
+  - Citar RFCs, styleguides, best practices conhecidos
+  - Evitar rules arbitrárias sem justificativa
+
+- **Categorização Clara**:
+  - Arquivo: `.cursor/rules/[category]-[aspect].mdc`
+  - Categories: architecture/, naming/, testing/, security/, etc
+  - Naming: kebab-case, descritivo
+
+- **Scope Apropriado**:
+  - Global: `.cursor/rules/[name].mdc` (aplica a todo projeto)
+  - Scoped: `[dir]/.cursor/rules/[name].mdc` (aplica apenas ao dir)
+
+### DON'T (Não Fazer)
+
+- ❌ Criar rules vagas ou subjetivas
+- ❌ Omitir seção Examples
+- ❌ Usar pseudo-code em examples (deve ser code real)
+- ❌ Omitir Rationale (o "por quê" é crucial)
+- ❌ Criar rules sem Enforcement definido
+- ❌ Duplicar rules existentes
+- ❌ Criar rules que conflitam com constitution
+- ❌ Misturar múltiplos aspectos em uma rule
+- ❌ Usar linguagem imperativa (use declarativa)
+
+## Examples
+
+### ✅ Good Rule
+
+```markdown
+# TypeScript: Function Size Limit
+
+## Principle
+
+Funções DEVEM ser pequenas, focadas e fáceis de testar.
+
+## Guidance
+
+### DO
+
+- Manter funções com máximo 50 linhas
+- Extrair helpers se função crescer
+- Uma responsabilidade por função
+
+### DON'T
+
+- Criar funções > 50 linhas
+- Misturar múltiplas responsabilidades
+
+## Examples
+
+### ✅ Good
+
+```typescript
+async function fetchUser(id: string): Promise<User> {
+  const response = await api.get(`/users/${id}`);
+  return parseUser(response.data);
+}
+
+function parseUser(data: any): User {
+  return {
+    id: data.id,
+    name: data.name,
+    email: data.email
+  };
+}
+```
+
+### ❌ Bad
+
+```typescript
+async function fetchUser(id: string): Promise<User> {
+  const response = await api.get(`/users/${id}`);
+  
+  const user = {
+    id: response.data.id,
+    name: response.data.name,
+    email: response.data.email
+  };
+  
+  if (user.email) {
+    await sendWelcomeEmail(user.email);
+  }
+  
+  await logActivity('user_fetch', user.id);
+  await updateCache(user.id, user);
+  
+  const preferences = await fetchPreferences(user.id);
+  user.preferences = preferences;
+  
+  return user;
+}
+```
+
+**Problemas**:
+- ❌ > 50 linhas
+- ❌ Múltiplas responsabilidades (fetch, email, log, cache, preferences)
+- ❌ Difícil de testar isoladamente
+
+## Rationale
+
+Funções pequenas são:
+- Mais fáceis de entender
+- Mais fáceis de testar
+- Mais fáceis de reutilizar
+- Menos propensas a bugs
+
+## Enforcement
+
+- ESLint: `max-lines-per-function` (50)
+- Code Review: Verificar manualmente
+- PR Checklist: "Todas as funções < 50 linhas?"
+
+## References
+
+- [Clean Code by Robert Martin](https://www.oreilly.com/library/view/clean-code-a/9780136083238/)
+- [TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html)
+```
+
+### ❌ Bad Rule
+
+```markdown
+# Code Quality
+
+Functions should be good.
+
+Use best practices.
+
+Don't write bad code.
+```
+
+**Problemas**:
+- ❌ Vago ("good", "best practices", "bad")
+- ❌ Não testável
+- ❌ Sem examples
+- ❌ Sem rationale
+- ❌ Sem enforcement
+- ❌ Sem references
+
+## Rationale
+
+**Declarative Language**: Rules definem O QUE, commands definem COMO. Separação clara de concerns.
+
+**Objective Testability**: Se rule não é verificável objetivamente, será ignorada ou mal interpretada.
+
+**Real Code Examples**: Pseudo-code é vago. Code real do projeto mostra exatamente o padrão esperado.
+
+**Official Sources**: Baseiar em docs oficiais dá autoridade e alinhamento com ecosystem.
+
+**Enforcement Mechanisms**: Rule sem enforcement é apenas sugestão. Enforcement torna obrigatório.
+
+## Enforcement
+
+### Automated (via maker.rule)
+
+- Validar estrutura (todas seções obrigatórias presentes)
+- Verificar Examples tem Good e Bad
+- Confirmar Rationale e Enforcement presentes
+- Validar Markdown syntax
+
+### Manual (Code Review)
+
+- Verificar testabilidade objetiva
+- Confirmar examples são code real
+- Validar não duplica rule existente
+- Confirmar alinhamento com constitution
+
+## References
+
+- [How to Write Good Rules](https://google.github.io/styleguide/contributing.html)
+- [RFC 2119: Key words for use in RFCs](https://www.ietf.org/rfc/rfc2119.txt) (MUST, SHOULD, MAY)
+- Constitution: `vibes/configs/constitution.md`

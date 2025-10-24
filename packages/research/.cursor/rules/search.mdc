@@ -1,0 +1,169 @@
+# Search Rules
+
+## Ferramentas de Busca
+
+### web_search
+- **Uso**: Todas as queries de busca web
+- **Conteúdo**: Acadêmico, técnico, documentação, notícias, tutoriais
+- **Limite**: 10-20 resultados por query
+- **Quando usar**: Qualquer busca na web
+
+### codebase_search
+- **Uso**: Busca no repositório local
+- **Conteúdo**: Código, documentação interna
+- **Quando usar**: Pesquisas sobre o próprio projeto
+
+## Estratégia de Busca
+
+### Geração de Queries
+- **Total**: 5-8 queries por pesquisa
+- **Tipos**:
+  - Query principal (da pergunta central)
+  - Queries de palavras-chave (2-3 keywords)
+  - Queries de contexto (com escopo)
+  - Queries de especificidade (aspectos específicos)
+  - Queries de casos de uso (exemplos práticos)
+
+### Diversidade de Fontes
+- Usar múltiplas queries
+- Evitar dominância de uma única fonte
+- Balancear acadêmico, técnico e prático
+
+## Processamento de Resultados
+
+### Extração de Dados
+- URL (obrigatório)
+- Título (obrigatório)
+- Snippet/descrição (obrigatório)
+- Timestamp de descoberta (obrigatório)
+- Query que encontrou (obrigatório)
+- Fonte/tool usado (obrigatório)
+
+### Deduplicação
+- Verificar URLs duplicadas
+- Usar Set para URLs existentes
+- Pular referências duplicadas
+- Incrementar contador de duplicatas
+
+### Enriquecimento
+- Identificar categoria preliminar (do URL)
+- Extrair tags preliminares (do título/snippet)
+- Adicionar domínio/autor se possível
+- Classificar por tipo de conteúdo
+
+## Limites e Controles
+
+### Limites de Busca
+- Máximo de referências: 100-200 (configurável)
+- Queries por pesquisa: 5-8
+- Resultados por query: 10-20
+- Total de queries: até atingir limite
+
+### Respeitar Limites
+- Parar quando atingir maxReferencesInitial
+- Priorizar diversidade de resultados
+- Se uma query retorna muitos resultados, limitar a 15-20
+- Não exceder limites de ferramentas
+
+## Categorização Preliminar
+
+### Categorias
+- academic (.edu, papers, journals)
+- documentation (docs., official docs)
+- blog (medium.com, dev.to, personal blogs)
+- tutorial (tutorial, guide, how-to)
+- news (news sites, tech news)
+- case-study (case studies, real examples)
+- opinion (opinion pieces, reviews)
+- research-paper (academic papers)
+- whitepaper (whitepapers, reports)
+- video (youtube.com, video content)
+- other (não categorizado)
+
+### Identificação
+- Baseada em domínio do URL
+- Baseada em palavras-chave no título
+- Baseada em estrutura da URL
+- Padrões conhecidos de domínios
+
+## Qualidade de Busca
+
+### Indicadores de Qualidade
+- Diversidade de fontes (não só um domínio)
+- Relevância das referências ao objetivo
+- Queries alinhadas com objetivo da pesquisa
+- Cobertura adequada do tema
+
+### Problemas Comuns
+- Todas referências do mesmo domínio
+- Queries muito genéricas
+- Pouca diversidade de perspectivas
+- Referências não relevantes
+
+### Soluções
+- Ajustar queries para mais específicas
+- Adicionar contexto ao escopo
+- Refinar palavras-chave
+- Variar tipos de queries
+
+## Metadados de Busca
+
+### Documentar
+- Queries executadas
+- Ferramenta usada para cada query
+- Número de resultados por query
+- Timestamp de cada query
+- Duplicatas evitadas
+
+### Salvar em metadata.json
+```json
+{
+  "searchPhase": {
+    "totalReferencesFound": 87,
+    "searchQueries": [
+      {
+        "query": "biometric auth react native",
+        "tool": "web_search",
+        "resultsCount": 15,
+        "timestamp": "2025-01-16T14:30:00Z"
+      }
+    ],
+    "completedAt": "2025-01-16T14:35:00Z"
+  }
+}
+```
+
+## Otimizações
+
+### Query Throttling
+- Não executar mais queries se já atingiu limite
+- Pular queries redundantes
+- Priorizar queries mais promissoras
+
+### Result Deduplication
+- Verificar duplicatas em tempo real
+- Usar Set para eficiência
+- Evitar processamento de duplicatas
+
+### Batch Processing
+- Processar resultados em batch
+- Atualizar metadata em batch
+- Eficiência de I/O
+
+## Tratamento de Erros
+
+### Query Falha
+- Log warning
+- Continuar com próxima query
+- Não abortar busca completa
+- Documentar falha em metadata
+
+### Rate Limit
+- Avisar usuário
+- Continuar com dados já coletados
+- Sugerir retomar depois
+
+### Nenhum Resultado
+- Tentar queries alternativas
+- Ajustar escopo
+- Sugerir refinamento do objetivo

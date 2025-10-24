@@ -1,0 +1,46 @@
+{
+    "name": "vibes-ecosystem",
+    "version": "1.0.0",
+    "description": "Mono-repo for vibes CLI and packages (agentic workflows)",
+    "private": true,
+    "type": "module",
+    "workspaces": [
+        "apps/*",
+        "packages/*",
+        "tools/*"
+    ],
+    "scripts": {
+        "build": "pnpm -r build",
+        "test": "pnpm -r test",
+        "lint": "pnpm -r lint",
+        "clean": "pnpm -r clean && rm -rf node_modules",
+        "publish:research": "pnpm --filter @vibes/research publish",
+        "publish:basic": "pnpm --filter @vibes/basic publish",
+        "publish:cli": "pnpm --filter vibe-devtools publish",
+        "publish:all": "pnpm -r --filter './packages/**' publish",
+        "dev:cli": "pnpm --filter vibe-devtools dev",
+        "changeset": "changeset",
+        "version-packages": "changeset version",
+        "release": "changeset publish"
+    },
+    "keywords": [
+        "vibes",
+        "monorepo",
+        "agentic",
+        "cursor",
+        "cli"
+    ],
+    "author": "Vibes Team",
+    "license": "MIT",
+    "devDependencies": {
+        "turbo": "^1.11.0",
+        "prettier": "^3.1.0",
+        "eslint": "^8.54.0",
+        "@changesets/cli": "^2.27.0",
+        "@changesets/changelog-github": "^0.5.0"
+    },
+    "engines": {
+        "node": ">=18.0.0",
+        "pnpm": ">=8.0.0"
+    }
+}

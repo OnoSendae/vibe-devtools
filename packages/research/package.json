@@ -1,0 +1,49 @@
+{
+    "name": "@vibe-devtools/research",
+    "version": "1.0.1",
+    "description": "Vibe DevTools Research Kit - Complete research pipelines (simple, deep, expert) for systematic investigation",
+    "type": "module",
+    "main": "index.js",
+    "files": [
+        ".cursor/",
+        "templates/",
+        "scripts/",
+        "examples/",
+        "constitution.md",
+        "README.md",
+        "vibe.json"
+    ],
+    "keywords": [
+        "vibe-devtools",
+        "vdt",
+        "research",
+        "investigation",
+        "analysis",
+        "ai",
+        "cursor",
+        "agentic",
+        "deep-research",
+        "expert-research",
+        "vibe-driven-development"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/onosendae/vibe-devtools",
+        "directory": "packages/research"
+    },
+    "bugs": {
+        "url": "https://github.com/onosendae/vibe-devtools/issues"
+    },
+    "homepage": "https://vibe-devtools.dev",
+    "author": "Cleber Hensel <cleberhensel@onosendae.com>",
+    "license": "MIT",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "scripts": {
+        "postinstall": "echo '✅ @vdt/research installed! Run: vdt list'"
+    }
+}

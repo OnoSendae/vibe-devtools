@@ -1,0 +1,244 @@
+# Planning: Task Generation and Project Planning Standards
+
+## Principle
+
+Planos DEVEM ser completos, atômicos, executáveis e rastreáveis. Tasks geradas DEVEM ser independentes, incrementais e ter critérios de validação claros.
+
+## Guidance
+
+### DO (Fazer)
+
+- **Feature ID Único e Descritivo**:
+  - Formato: kebab-case
+  - Máximo: 20 caracteres
+  - Descritivo do objetivo
+  - Exemplo: `upgrade-rn-076`, `auth-biometria`, `migrate-nav-7`
+
+- **Tasks Atômicas**:
+  - Uma task = uma unidade de trabalho completável
+  - Máximo 4 horas de esforço por task
+  - Se > 4h, quebrar em sub-tasks
+  - Cada task deve poder ser implementada independentemente
+
+- **Priorização Clara (P0-P4)**:
+  - P0 (BLOCKER): Impede qualquer progresso
+  - P1 (CRITICAL): Bloqueia funcionalidade principal
+  - P2 (HIGH): Importante para conclusão
+  - P3 (MEDIUM): Recomendado mas não bloqueante
+  - P4 (LOW): Nice to have
+
+- **Dependências Explícitas**:
+  - Campo `dependsOn`: Lista de task IDs predecessores
+  - Campo `blocks`: Lista de task IDs sucessores
+  - Validar que não há ciclos de dependência
+  - Ordem topológica deve ser possível
+
+- **Critérios de Validação**:
+  - Cada task DEVE ter seção "Validation"
+  - Critérios objetivos e verificáveis
+  - Como saber que task está completa
+  - Exemplos: "Tests pass", "Component renders", "API returns 200"
+
+- **Metadados Completos**:
+  ```json
+  {
+    "featureId": "feature-name",
+    "featureName": "Full Feature Name",
+    "sourcePlan": "objective ou path do plano original",
+    "planType": "upgrade|migration|feature|refactoring|bugfix",
+    "totalTasks": 42,
+    "totalPhases": 6,
+    "estimatedComplexity": "LOW|MEDIUM|HIGH",
+    "riskLevel": "LOW|MEDIUM|HIGH",
+    "timestamp": "2025-10-21T12:00:00Z"
+  }
+  ```
+
+- **Organização por Prioridade**:
+  - Estrutura: `vibes/tasks/[FEATURE_ID]/[PRIORITY_FOLDER]/`
+  - Folders: p0-bloqueador, p1-critico, p2-alto, p3-medio, p4-baixo
+  - Naming: `task-[FEATURE_ID]-[NUM]-[CATEGORY]-[SLUG].md`
+
+- **Índices Atualizados**:
+  - Índice específico: `vibes/tasks/[FEATURE_ID]/_index.md`
+  - Índice consolidado: `vibes/tasks/_index.md`
+  - Progress tracking incluído
+
+- **Memory do Planejamento**:
+  - Salvar em `vibes/memory/plan-[FEATURE_ID]-[TIMESTAMP].md`
+  - Incluir: objetivo, decisões-chave, riscos, tasks geradas
+  - Rastreabilidade completa
+
+### DON'T (Não Fazer)
+
+- ❌ Tasks vagas ("Implementar feature X")
+- ❌ Tasks muito grandes (> 4 horas)
+- ❌ Omitir dependências entre tasks
+- ❌ Omitir critérios de validação
+- ❌ Feature IDs genéricos ("tasks", "plan", "temp")
+- ❌ Criar ciclos de dependência
+- ❌ Omitir estimativa de tempo
+- ❌ Omitir arquivos afetados
+- ❌ Sobrescrever tasks existentes sem estratégia
+
+## Examples
+
+### ✅ Good Task
+
+```markdown
+---
+featureId: upgrade-rn-076
+taskId: upgrade-rn-076-003
+priority: P1
+category: config
+phase: 1
+estimatedTime: 45 min
+---
+
+# Task: Atualizar package.json com React Native 0.76
+
+## Metadata
+
+**Feature**: Upgrade React Native 0.76
+**Priority**: P1 (CRITICAL)
+**Category**: config
+**Phase**: 1 - Preparação
+**Estimated Time**: 45 min
+
+## Context
+
+Atualizar package.json para React Native 0.76.x e dependências compatíveis.
+
+## Description
+
+Modificar package.json para:
+- react-native: 0.76.0
+- react: 18.3.1
+- Outras deps conforme compatibility matrix
+
+## Affected Files
+
+- package.json
+
+## Dependencies
+
+**Depends On**:
+- TASK-001: Criar backup do projeto
+- TASK-002: Criar branch de upgrade
+
+**Blocks**:
+- TASK-004: Atualizar código nativo Android
+- TASK-005: Atualizar código nativo iOS
+
+## Implementation Steps
+
+1. Abrir package.json
+2. Atualizar react-native para 0.76.0
+3. Atualizar react para 18.3.1
+4. Atualizar dependências relacionadas conforme matrix
+5. Salvar arquivo
+
+## Implementation Checklist
+
+- [ ] package.json modificado
+- [ ] Versões corretas aplicadas
+- [ ] Arquivo salvo
+
+## Validation
+
+- package.json contém "react-native": "0.76.0"
+- package.json contém "react": "18.3.1"
+- Arquivo é JSON válido (parse sem erro)
+
+## Notes
+
+Ver compatibility matrix em: https://reactnative.dev/versions
+```
+
+### ❌ Bad Task
+
+```markdown
+# Fix stuff
+
+Do some things to fix the app.
+
+Maybe update some dependencies.
+
+Good luck!
+```
+
+**Problemas**:
+- ❌ Vago ("stuff", "some things")
+- ❌ Sem metadata
+- ❌ Sem arquivos afetados
+- ❌ Sem dependências
+- ❌ Sem steps de implementação
+- ❌ Sem critérios de validação
+- ❌ Sem estimativa de tempo
+
+### ✅ Good Feature ID
+
+```
+upgrade-rn-076          ✅ (descritivo, claro, único)
+migrate-nav-7           ✅ (curto, objetivo claro)
+auth-biometria          ✅ (feature clara)
+refactor-pressable      ✅ (tipo + alvo claros)
+```
+
+### ❌ Bad Feature ID
+
+```
+tasks                   ❌ (genérico)
+plan                    ❌ (vago)
+temp                    ❌ (não descritivo)
+my-very-long-feature-name-that-goes-on-forever  ❌ (> 20 chars)
+UPGRADE_RN              ❌ (não kebab-case)
+```
+
+## Rationale
+
+**Atomic Tasks**: Tasks pequenas são mais fáceis de implementar, testar e revisar. Reduz risco de merge conflicts.
+
+**Clear Priorities**: P0-P4 permite ordenar trabalho por impacto. Foco em blockers primeiro.
+
+**Explicit Dependencies**: Previne implementação fora de ordem. Permite scheduling inteligente.
+
+**Validation Criteria**: Remove ambiguidade sobre "done". Facilita code review e QA.
+
+**Complete Metadata**: Permite analytics, tracking, reporting. Rastreabilidade do planejamento à execução.
+
+**Organization by Priority**: Fácil identificar e focar em tasks críticas. Visual scanning rápido.
+
+**Planning Memory**: Decisões e contexto preservados. Permite revisitar raciocínio original.
+
+## Enforcement
+
+### Automated (via planner.project)
+
+- Validar feature ID único
+- Gerar tasks com todos os campos obrigatórios
+- Validar dependências não circulares
+- Criar estrutura de diretórios correta
+- Salvar memory do planejamento
+- Atualizar índices automaticamente
+
+### Automated (via generator.task.cjs)
+
+- Template obrigatório (`template.task.md`)
+- Todos placeholders preenchidos
+- Validar JSON de input
+- Criar arquivos em estrutura correta
+
+### Manual (Code Review)
+
+- Verificar tasks são atômicas (< 4h)
+- Confirmar critérios de validação claros
+- Validar dependências fazem sentido
+- Verificar estimativas razoáveis
+
+## References
+
+- Template Task: `vibes/structure/templates/template.task.md`
+- Script Generator: `vibes/scripts/generator.task.cjs`
+- Planner Command: `planner.project.md`
+- Constitution Principle IX: Backup antes de operações drásticas

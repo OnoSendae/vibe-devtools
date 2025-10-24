@@ -1,0 +1,48 @@
+{
+    "name": "vibe-devtools",
+    "version": "0.7.1",
+    "description": "CLI tool to install and manage vibes (agentic command packages)",
+    "type": "module",
+    "main": "dist/index.js",
+    "bin": {
+        "vibes": "./dist/index.js",
+        "vdt": "./dist/index.js"
+    },
+    "files": [
+        "dist/"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "start": "node dist/index.js",
+        "test": "vitest",
+        "lint": "eslint src/"
+    },
+    "keywords": [
+        "vibes",
+        "cli",
+        "agentic",
+        "cursor",
+        "commands",
+        "package-manager"
+    ],
+    "author": "Vibes Team",
+    "license": "MIT",
+    "dependencies": {
+        "commander": "^12.0.0",
+        "prompts": "^2.4.2",
+        "chalk": "^5.3.0",
+        "ora": "^8.0.1",
+        "cli-table3": "^0.6.3"
+    },
+    "devDependencies": {
+        "@types/node": "^20.0.0",
+        "@types/prompts": "^2.4.9",
+        "typescript": "^5.3.0",
+        "vitest": "^1.0.0",
+        "eslint": "^8.0.0"
+    },
+    "engines": {
+        "node": ">=18.0.0"
+    }
+}

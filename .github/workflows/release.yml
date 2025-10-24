@@ -1,0 +1,118 @@
+name: Release - Version Packages
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build all packages
+        run: pnpm build
+
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: pnpm release
+          version: pnpm version-packages
+          commit: 'chore: version packages'
+          title: 'chore: version packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Releases
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          echo "Creating GitHub Releases for published packages..."
+          
+          PUBLISHED='${{ steps.changesets.outputs.publishedPackages }}'
+          
+          echo "$PUBLISHED" | jq -c '.[]' | while read package; do
+            NAME=$(echo "$package" | jq -r '.name')
+            VERSION=$(echo "$package" | jq -r '.version')
+            
+            TAG="${NAME}@${VERSION}"
+            
+            if [[ "$NAME" == "vibes-cli" ]]; then
+              TAG="cli/v${VERSION}"
+            elif [[ "$NAME" == "@vibe-devtools/basic" ]]; then
+              TAG="packages/basic/v${VERSION}"
+            elif [[ "$NAME" == "@vibe-devtools/research" ]]; then
+              TAG="packages/research/v${VERSION}"
+            fi
+            
+            CHANGELOG_FILE=""
+            if [[ "$NAME" == "vibes-cli" ]]; then
+              CHANGELOG_FILE="apps/cli/CHANGELOG.md"
+            else
+              PACKAGE_NAME=$(echo "$NAME" | sed 's/@vibe-devtools\///')
+              CHANGELOG_FILE="packages/${PACKAGE_NAME}/CHANGELOG.md"
+            fi
+            
+            RELEASE_NOTES=""
+            if [[ -f "$CHANGELOG_FILE" ]]; then
+              RELEASE_NOTES=$(awk "/^## ${VERSION}/,/^## [0-9]/" "$CHANGELOG_FILE" | sed '1d;$d')
+            fi
+            
+            if [[ -z "$RELEASE_NOTES" ]]; then
+              RELEASE_NOTES="Release ${VERSION} of ${NAME}"
+            fi
+            
+            if gh release view "$TAG" &>/dev/null; then
+              echo "⚠️  Release $TAG already exists, skipping..."
+            else
+              gh release create "$TAG" \
+                --title "${NAME}@${VERSION}" \
+                --notes "$RELEASE_NOTES" \
+                --target main
+              
+              echo "✅ Created release: $TAG"
+            fi
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          echo "## 🚀 Packages Published" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.changesets.outputs.publishedPackages }}" | jq -r '.[] | "- **\(.name)** v\(.version)"' >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ All packages published successfully to npm" >> $GITHUB_STEP_SUMMARY
+          echo "✅ GitHub Releases created" >> $GITHUB_STEP_SUMMARY
+

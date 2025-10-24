@@ -1,0 +1,50 @@
+{
+    "name": "@vibe-devtools/basic",
+    "version": "1.0.2",
+    "description": "Vibe DevTools Basic Kit - Foundation tools for building and planning (makers, planners, constitution)",
+    "type": "module",
+    "main": "index.js",
+    "files": [
+        ".cursor/",
+        "templates/",
+        "scripts/",
+        "examples/",
+        "constitution.md",
+        "README.md",
+        "vibe.json"
+    ],
+    "keywords": [
+        "vibe-devtools",
+        "vdt",
+        "basic",
+        "maker",
+        "planner",
+        "cursor",
+        "agentic",
+        "ai",
+        "foundation",
+        "meta",
+        "tools",
+        "vibe-driven-development"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/onosendae/vibe-devtools",
+        "directory": "packages/basic"
+    },
+    "bugs": {
+        "url": "https://github.com/onosendae/vibe-devtools/issues"
+    },
+    "homepage": "https://vibe-devtools.dev",
+    "author": "Cleber Hensel <cleberhensel@onosendae.com>",
+    "license": "MIT",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "scripts": {
+        "postinstall": "echo '✅ @vdt/basic installed! Run: vdt list'"
+    }
+}

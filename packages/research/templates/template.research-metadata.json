@@ -1,0 +1,629 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Deep Research Metadata Schema",
+    "description": "Schema completo de metadados para pesquisas profundas. Usado por research.* commands.",
+    "type": "object",
+    "required": [
+        "researchId",
+        "objective",
+        "status",
+        "created",
+        "updated"
+    ],
+    "properties": {
+        "researchId": {
+            "type": "string",
+            "description": "ID único da pesquisa (kebab-case, max 30 chars)",
+            "pattern": "^[a-z0-9-]{3,30}$",
+            "examples": [
+                "auth-methods-2025",
+                "deep-learning-nlp"
+            ]
+        },
+        "objective": {
+            "type": "object",
+            "required": [
+                "question",
+                "scope"
+            ],
+            "properties": {
+                "question": {
+                    "type": "string",
+                    "description": "Pergunta de pesquisa clara e específica",
+                    "minLength": 10,
+                    "maxLength": 500
+                },
+                "scope": {
+                    "type": "string",
+                    "description": "Escopo e limites da pesquisa",
+                    "minLength": 10,
+                    "maxLength": 1000
+                },
+                "context": {
+                    "type": "string",
+                    "description": "Contexto adicional ou motivação"
+                },
+                "successCriteria": {
+                    "type": "array",
+                    "description": "Critérios de sucesso da pesquisa",
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1
+                }
+            }
+        },
+        "status": {
+            "type": "string",
+            "enum": [
+                "initialized",
+                "searching",
+                "scoring",
+                "analyzing",
+                "synthesizing",
+                "validating",
+                "completed",
+                "paused",
+                "cancelled"
+            ],
+            "description": "Status atual da pesquisa"
+        },
+        "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Data/hora de criação (ISO 8601)"
+        },
+        "updated": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Data/hora da última atualização (ISO 8601)"
+        },
+        "inputSources": {
+            "type": "array",
+            "description": "Fontes de entrada da pesquisa",
+            "items": {
+                "type": "object",
+                "required": [
+                    "type",
+                    "content"
+                ],
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "text",
+                            "markdown",
+                            "file",
+                            "url"
+                        ],
+                        "description": "Tipo da fonte"
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "Conteúdo ou path da fonte"
+                    },
+                    "extractedKeywords": {
+                        "type": "array",
+                        "description": "Palavras-chave extraídas automaticamente",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "searchPhase": {
+            "type": "object",
+            "description": "Metadados da fase de busca inicial",
+            "properties": {
+                "totalReferencesFound": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "description": "Total de referências encontradas"
+                },
+                "searchQueries": {
+                    "type": "array",
+                    "description": "Queries utilizadas na busca",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "query": {
+                                "type": "string"
+                            },
+                            "tool": {
+                                "type": "string",
+                                "enum": [
+                                    "web_search"
+                                ]
+                            },
+                            "resultsCount": {
+                                "type": "integer"
+                            },
+                            "timestamp": {
+                                "type": "string",
+                                "format": "date-time"
+                            }
+                        }
+                    }
+                },
+                "completedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "references": {
+            "type": "array",
+            "description": "Lista de todas as referências encontradas",
+            "items": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "title",
+                    "url",
+                    "discoveredAt"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID único da referência (REF-001, REF-002, ...)",
+                        "pattern": "^REF-\\d{3,}$"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Título da referência"
+                    },
+                    "url": {
+                        "type": "string",
+                        "format": "uri",
+                        "description": "URL da referência"
+                    },
+                    "snippet": {
+                        "type": "string",
+                        "description": "Snippet ou resumo inicial"
+                    },
+                    "discoveredAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Quando foi descoberta"
+                    },
+                    "source": {
+                        "type": "string",
+                        "enum": [
+                            "web_search",
+                            "web_search",
+                            "web_search",
+                            "snowballing",
+                            "manual"
+                        ],
+                        "description": "Como foi descoberta"
+                    },
+                    "scoring": {
+                        "type": "object",
+                        "description": "Resultado do scoring (após research.score)",
+                        "properties": {
+                            "totalScore": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 10,
+                                "description": "Score total (0-10)"
+                            },
+                            "dimensions": {
+                                "type": "object",
+                                "properties": {
+                                    "credibility": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 10,
+                                        "description": "Credibilidade da fonte (0-10)"
+                                    },
+                                    "relevance": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 10,
+                                        "description": "Relevância para o objetivo (0-10)"
+                                    },
+                                    "recency": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 10,
+                                        "description": "Quão recente é (0-10)"
+                                    },
+                                    "depth": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 10,
+                                        "description": "Profundidade do conteúdo (0-10)"
+                                    },
+                                    "authority": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 10,
+                                        "description": "Autoridade do autor/site (0-10)"
+                                    }
+                                }
+                            },
+                            "reasoning": {
+                                "type": "string",
+                                "description": "Explicação do score atribuído"
+                            },
+                            "scoredAt": {
+                                "type": "string",
+                                "format": "date-time"
+                            }
+                        }
+                    },
+                    "analysis": {
+                        "type": "object",
+                        "description": "Resultado da análise profunda (após research.analyze)",
+                        "properties": {
+                            "status": {
+                                "type": "string",
+                                "enum": [
+                                    "pending",
+                                    "in_progress",
+                                    "completed",
+                                    "failed",
+                                    "skipped"
+                                ],
+                                "description": "Status da análise"
+                            },
+                            "reportPath": {
+                                "type": "string",
+                                "description": "Path do relatório de análise completo"
+                            },
+                            "keyFindings": {
+                                "type": "array",
+                                "description": "Principais descobertas",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "quotes": {
+                                "type": "array",
+                                "description": "Citações importantes extraídas",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "text": {
+                                            "type": "string"
+                                        },
+                                        "context": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "analyzedAt": {
+                                "type": "string",
+                                "format": "date-time"
+                            }
+                        }
+                    },
+                    "tags": {
+                        "type": "array",
+                        "description": "Tags da referência",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "categories": {
+                        "type": "array",
+                        "description": "Categorias da referência",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "academic",
+                                "blog",
+                                "documentation",
+                                "news",
+                                "tutorial",
+                                "case-study",
+                                "opinion",
+                                "research-paper",
+                                "whitepaper",
+                                "video",
+                                "other"
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "statistics": {
+            "type": "object",
+            "description": "Estatísticas agregadas da pesquisa",
+            "properties": {
+                "totalReferences": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "scoredReferences": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "analyzedReferences": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "averageScore": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 10
+                },
+                "topScoredCount": {
+                    "type": "integer",
+                    "description": "Quantidade no top 20% (para análise profunda)"
+                },
+                "referencesByCategory": {
+                    "type": "object",
+                    "description": "Contagem por categoria",
+                    "additionalProperties": {
+                        "type": "integer"
+                    }
+                },
+                "referencesByScore": {
+                    "type": "object",
+                    "description": "Distribuição de scores",
+                    "properties": {
+                        "high": {
+                            "type": "integer",
+                            "description": "Score >= 7.0"
+                        },
+                        "medium": {
+                            "type": "integer",
+                            "description": "Score 4.0-6.9"
+                        },
+                        "low": {
+                            "type": "integer",
+                            "description": "Score < 4.0"
+                        }
+                    }
+                }
+            }
+        },
+        "synthesis": {
+            "type": "object",
+            "description": "Sínteses progressivas realizadas",
+            "properties": {
+                "miniSyntheses": {
+                    "type": "array",
+                    "description": "Mini-sínteses incrementais",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "synthesisId": {
+                                "type": "string",
+                                "pattern": "^SYNTH-\\d{3}$"
+                            },
+                            "referencesIncluded": {
+                                "type": "array",
+                                "description": "IDs das referências incluídas",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "keyPatterns": {
+                                "type": "array",
+                                "description": "Padrões identificados",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "gaps": {
+                                "type": "array",
+                                "description": "Gaps identificados",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "contradictions": {
+                                "type": "array",
+                                "description": "Contradições encontradas",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "reportPath": {
+                                "type": "string"
+                            },
+                            "createdAt": {
+                                "type": "string",
+                                "format": "date-time"
+                            }
+                        }
+                    }
+                },
+                "finalSynthesis": {
+                    "type": "object",
+                    "description": "Síntese final",
+                    "properties": {
+                        "reportPath": {
+                            "type": "string",
+                            "description": "Path do relatório final"
+                        },
+                        "chapterPaths": {
+                            "type": "array",
+                            "description": "Paths dos capítulos individuais",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "completedAt": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    }
+                }
+            }
+        },
+        "validation": {
+            "type": "object",
+            "description": "Resultado da validação cruzada",
+            "properties": {
+                "consensus": {
+                    "type": "array",
+                    "description": "Pontos de consenso entre fontes",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "finding": {
+                                "type": "string"
+                            },
+                            "supportingReferences": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "confidenceLevel": {
+                                "type": "string",
+                                "enum": [
+                                    "very_high",
+                                    "high",
+                                    "medium",
+                                    "low"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "divergences": {
+                    "type": "array",
+                    "description": "Divergências entre fontes",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "topic": {
+                                "type": "string"
+                            },
+                            "perspectives": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "view": {
+                                            "type": "string"
+                                        },
+                                        "references": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "biases": {
+                    "type": "array",
+                    "description": "Vieses identificados",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "biasType": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "affectedReferences": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "reportPath": {
+                    "type": "string"
+                },
+                "completedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "paths": {
+            "type": "object",
+            "description": "Paths de todos os artefatos gerados",
+            "properties": {
+                "baseDir": {
+                    "type": "string",
+                    "description": "Diretório base (./memory/[researchId])"
+                },
+                "metadataFile": {
+                    "type": "string",
+                    "description": "Este arquivo de metadados"
+                },
+                "referencesDir": {
+                    "type": "string",
+                    "description": "Diretório de análises de referências"
+                },
+                "synthesisDir": {
+                    "type": "string",
+                    "description": "Diretório de sínteses"
+                },
+                "finalReportDir": {
+                    "type": "string",
+                    "description": "Diretório do relatório final"
+                }
+            }
+        },
+        "configuration": {
+            "type": "object",
+            "description": "Configurações da pesquisa",
+            "properties": {
+                "maxReferencesInitial": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 200,
+                    "default": 100,
+                    "description": "Máximo de referências na busca inicial"
+                },
+                "topPercentageForAnalysis": {
+                    "type": "number",
+                    "minimum": 0.05,
+                    "maximum": 1.0,
+                    "default": 0.2,
+                    "description": "Percentual top para análise profunda (0.2 = 20%)"
+                },
+                "pauseAfterScoring": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Pausar após scoring para aprovação"
+                },
+                "synthesisInterval": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 50,
+                    "default": 10,
+                    "description": "Criar mini-síntese a cada N referências"
+                }
+            }
+        },
+        "notes": {
+            "type": "array",
+            "description": "Notas e observações durante a pesquisa",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "timestamp": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "author": {
+                        "type": "string",
+                        "description": "human ou ai"
+                    },
+                    "content": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
