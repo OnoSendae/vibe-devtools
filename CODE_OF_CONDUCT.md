@@ -34,7 +34,7 @@ Este Código de Conduta se aplica tanto em espaços do projeto quanto em espaço
 
 ## Aplicação
 
-Instâncias de comportamento abusivo, de assédio ou de outra forma inaceitável podem ser relatadas entrando em contato com o mantenedor do projeto em cleberhensel@gmail.com. Todas as reclamações serão revisadas e investigadas e resultarão em uma resposta considerada necessária e apropriada às circunstâncias. O mantenedor do projeto é obrigado a manter a confidencialidade em relação ao relator de um incidente. Mais detalhes de políticas específicas de aplicação podem ser publicados separadamente.
+Instâncias de comportamento abusivo, de assédio ou de outra forma inaceitável podem ser relatadas entrando em contato com o mantenedor do projeto em clebercleberhensel@gmail.com. Todas as reclamações serão revisadas e investigadas e resultarão em uma resposta considerada necessária e apropriada às circunstâncias. O mantenedor do projeto é obrigado a manter a confidencialidade em relação ao relator de um incidente. Mais detalhes de políticas específicas de aplicação podem ser publicados separadamente.
 
 Mantenedores do projeto que não seguem ou não aplicam o Código de Conduta de boa fé podem enfrentar repercussões temporárias ou permanentes conforme determinado por outros membros da liderança do projeto.
 
@@ -50,6 +50,6 @@ Para respostas a perguntas comuns sobre este código de conduta, consulte as FAQ
 
 Para reportar violações ou tirar dúvidas sobre este Código de Conduta:
 
-**Email**: cleberhensel@gmail.com  
+**Email**: clebercleberhensel@gmail.com  
 **GitHub**: [@cleberhensel](https://github.com/cleberhensel)
 

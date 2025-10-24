@@ -415,5 +415,5 @@ Problemas não resolvidos?
 
 - 🐛 [Abrir Issue](https://github.com/onosendae/vibe-devtools/issues)
 - 💬 [Discussions](https://github.com/onosendae/vibe-devtools/discussions)
-- 📧 Email: cleberhensel@gmail.com
+- 📧 Email: clebercleberhensel@gmail.com
 
