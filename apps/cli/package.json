@@ -1,6 +1,6 @@
 {
     "name": "vibe-devtools",
-    "version": "0.7.0",
+    "version": "0.7.1",
     "description": "CLI tool to install and manage vibes (agentic command packages)",
     "type": "module",
     "main": "dist/index.js",
