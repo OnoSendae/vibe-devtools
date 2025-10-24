@@ -304,13 +304,7 @@ O output é um relatório final extenso dividido em capítulos salvos em `./memo
 
 ### Fase 6: Gerar Relatório Consolidado
 
-1. **Executar Script de Merge**:
-   ```bash
-   vibes/scripts/bash/merge-research-report.sh \
-     ./memory/[RESEARCH_ID]/final-report
-   ```
-
-2. **Validar FULL-REPORT.md**:
+1. **Validar FULL-REPORT.md**:
    - Todos capítulos incluídos
    - Estrutura coerente
    - TOC atualizado
@@ -548,21 +542,6 @@ docs(research): complete [research-name] deep research
 - NUNCA fazer afirmações sem referências
 - NUNCA deixar gaps sem documentar
 
-## Scripts
-
-### merge-research-report.sh
-
-**Propósito**: Merge capítulos em relatório consolidado
-
-**Localização**: `vibes/scripts/bash/merge-research-report.sh`
-
-**Uso**:
-```bash
-vibes/scripts/bash/merge-research-report.sh [REPORT_DIR]
-```
-
-**Output**: `[REPORT_DIR]/FULL-REPORT.md`
-
 ## Templates
 
 ### template.research-report.md
@@ -627,9 +606,6 @@ Status: ✅ COMPLETED
 ### Dependências
 
 **Commands Obrigatórios**: Todos anteriores do pipeline
-
-**Scripts Obrigatórios**:
-- `vibes/scripts/bash/merge-research-report.sh`
 
 **Templates Obrigatórios**:
 - `research/templates/template.research-report.md`
