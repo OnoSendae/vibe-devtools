@@ -7,6 +7,9 @@ import { installFromGitHub, type VibeManifest } from '../installers/github-insta
 import { installFromNpm } from '../installers/npm-installer.js';
 import { createSymlink, getVibesHome, getVibePackageDir } from '../utils/symlink-manager.js';
 import { AdapterRegistry, AgentDetector, type VibePackage, type TargetPaths } from '../adapters/index.js';
+import { ConflictDetector } from '../stash/conflict-detector.js';
+import { ConflictResolver } from '../stash/conflict-resolver.js';
+import { StashManager } from '../stash/stash-manager.js';
 
 interface GlobalManifest {
     version: string;
@@ -72,12 +75,57 @@ async function createVibeSymlinks(
     vibeName: string,
     vibeVersion: string,
     vibeManifest: VibeManifest,
-    projectRoot: string
+    projectRoot: string,
+    options: { dryRun?: boolean } = {}
 ): Promise<Record<string, string>> {
     const vibeDir = getVibePackageDir(vibeName, vibeVersion);
     const symlinksCreated: Record<string, string> = {};
 
     if (!vibeManifest.symlinks) {
+        return symlinksCreated;
+    }
+
+    const detector = new ConflictDetector();
+    const conflicts = await detector.detectAll(
+        vibeManifest.symlinks,
+        projectRoot,
+        vibeDir
+    );
+
+    if (conflicts.length > 0 && !options.dryRun) {
+        const resolver = new ConflictResolver();
+        const resolution = await resolver.prompt(conflicts);
+
+        if (resolution === 'cancel') {
+            throw new Error('Installation cancelled by user');
+        }
+
+        if (resolution === 'stash-and-overwrite') {
+            const stashManager = new StashManager();
+            const filesToStash = new Map(
+                conflicts.map(c => [c.destPath, c.destPath])
+            );
+
+            const stashId = await stashManager.create(filesToStash, {
+                reason: 'install',
+                package: `${vibeName}@${vibeVersion}`,
+                version_new: vibeVersion
+            });
+
+            console.log('');
+            console.log(chalk.green(`✓ Stash created: stash{${stashId}}`));
+            console.log(chalk.gray(`  To restore: npx vibe-devtools stash apply ${stashId}`));
+            console.log('');
+        }
+    }
+
+    if (options.dryRun) {
+        console.log(chalk.blue('🔍 Dry Run - No changes will be made\n'));
+        console.log(chalk.bold('Conflicts detected:'), conflicts.length);
+        for (const conflict of conflicts) {
+            console.log(`  - ${conflict.destPath}`);
+        }
+        console.log('');
         return symlinksCreated;
     }
 
@@ -92,7 +140,7 @@ async function createVibeSymlinks(
 
         try {
             await createSymlink(sourcePath, destPath, {
-                force: false,
+                force: true,
                 type: 'dir',
                 fallbackCopy: true
             });
@@ -108,7 +156,7 @@ async function createVibeSymlinks(
 
 export async function installCommand(
     source: string,
-    options: { conflict?: string; agent?: string } = {}
+    options: { conflict?: string; agent?: string; dryRun?: boolean } = {}
 ): Promise<void> {
     const spinner = ora('Installing vibe...').start();
 
@@ -200,7 +248,8 @@ export async function installCommand(
             manifest.name,
             manifest.version,
             manifest,
-            projectRoot
+            projectRoot,
+            { dryRun: options.dryRun }
         );
 
         spinner.text = 'Updating manifest...';
