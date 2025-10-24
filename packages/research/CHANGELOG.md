@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.2
+
+### Patch Changes
+
+- 7c755ca: Release updates with new features and improvements
+  - Add new templates for assistant architecture, conversation, metadata, synthesis, character evolution, and memory
+  - Update research.validate command
+  - Introduce stash system for conflict management and backups in CLI
+  - Add git synchronization scripts
+  - Update contributing documentation
+
 ## 1.0.1
 
 ### Patch Changes
