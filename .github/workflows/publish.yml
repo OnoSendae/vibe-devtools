@@ -20,6 +20,7 @@ on:
 
 jobs:
   publish:
+    if: github.repository == 'OnoSendae/vibe-devtools'
     runs-on: ubuntu-latest
     permissions:
       contents: read

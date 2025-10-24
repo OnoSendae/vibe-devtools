@@ -36,11 +36,11 @@ Existem várias formas de contribuir:
 
 ### 1. Reportar Bugs 🐛
 
-Encontrou um bug? [Abra um issue](https://github.com/onosendae/vibe-devtools/issues/new?template=bug_report.md).
+Encontrou um bug? [Abra um issue](https://github.com/OnoSendae/vibe-devtools/issues/new?template=bug_report.md).
 
 ### 2. Sugerir Features ✨
 
-Tem uma ideia? [Abra uma discussion](https://github.com/onosendae/vibe-devtools/discussions) ou [crie um feature request](https://github.com/onosendae/vibe-devtools/issues/new?template=feature_request.md).
+Tem uma ideia? [Abra uma discussion](https://github.com/OnoSendae/vibe-devtools/discussions) ou [crie um feature request](https://github.com/OnoSendae/vibe-devtools/issues/new?template=feature_request.md).
 
 ### 3. Melhorar Documentação 📚
 
@@ -60,13 +60,13 @@ A maior contribuição: **crie e compartilhe vibes customizados**!
 
 ### Antes de Reportar
 
-- Verifique a [lista de issues](https://github.com/onosendae/vibe-devtools/issues) para ver se já foi reportado
+- Verifique a [lista de issues](https://github.com/OnoSendae/vibe-devtools/issues) para ver se já foi reportado
 - Tente reproduzir com a versão mais recente
 - Colete informações de debug (versões, logs, screenshots)
 
 ### Como Reportar
 
-Use o [template de bug report](https://github.com/onosendae/vibe-devtools/issues/new?template=bug_report.md).
+Use o [template de bug report](https://github.com/OnoSendae/vibe-devtools/issues/new?template=bug_report.md).
 
 **Informações essenciais**:
 - Versão da CLI (`vdt --version`)
@@ -112,7 +112,7 @@ Error: EACCES: permission denied, mkdir '~/.vibes'
 
 ### Como Sugerir
 
-Use o [template de feature request](https://github.com/onosendae/vibe-devtools/issues/new?template=feature_request.md).
+Use o [template de feature request](https://github.com/OnoSendae/vibe-devtools/issues/new?template=feature_request.md).
 
 **Estrutura boa**:
 ```markdown
