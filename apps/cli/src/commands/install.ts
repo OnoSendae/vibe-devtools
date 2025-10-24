@@ -10,6 +10,7 @@ import { AdapterRegistry, AgentDetector, type VibePackage, type TargetPaths } fr
 import { ConflictDetector } from '../stash/conflict-detector.js';
 import { ConflictResolver } from '../stash/conflict-resolver.js';
 import { StashManager } from '../stash/stash-manager.js';
+import { isCriticalSystemDirectory } from '../utils/safe-paths.js';
 
 interface GlobalManifest {
     version: string;
@@ -159,17 +160,8 @@ export async function installCommand(
     options: { conflict?: string; agent?: string; dryRun?: boolean } = {}
 ): Promise<void> {
     const projectRoot = path.resolve(process.cwd());
-    const criticalPaths = [
-        '/', '/usr', '/etc', '/var', '/System', '/Library', '/bin', '/sbin', '/opt', '/boot',
-        '/private/etc', '/private/var', '/private/tmp'
-    ];
     
-    const isCriticalDir = criticalPaths.some(critical => {
-        const resolvedCritical = path.resolve(critical);
-        return projectRoot === resolvedCritical || projectRoot.startsWith(resolvedCritical + path.sep);
-    });
-    
-    if (isCriticalDir) {
+    if (isCriticalSystemDirectory(projectRoot)) {
         console.error(chalk.red(`❌ Cannot install in critical system directory: ${projectRoot}`));
         console.error(chalk.yellow('Please run from a safe project directory.'));
         throw new Error(`Installation blocked: critical system directory`);
