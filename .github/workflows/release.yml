@@ -112,7 +112,7 @@ jobs:
         run: |
           echo "## 🚀 Packages Published" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "${{ steps.changesets.outputs.publishedPackages }}" | jq -r '.[] | "- **\(.name)** v\(.version)"' >> $GITHUB_STEP_SUMMARY
+          echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -r '.[] | "- **\(.name)** v\(.version)"' >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "✅ All packages published successfully to npm" >> $GITHUB_STEP_SUMMARY
           echo "✅ GitHub Releases created" >> $GITHUB_STEP_SUMMARY
