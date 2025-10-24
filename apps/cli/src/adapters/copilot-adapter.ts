@@ -139,7 +139,7 @@ export class CopilotAdapter extends BaseAdapter {
             const instructionsPath = path.join(instructionsDir, `command-${cmdName}.instructions.md`);
 
             let content = `# ${cmdName} Command Instructions\n\n`;
-            
+
             if (frontmatter.description) {
                 content += `**Description**: ${frontmatter.description}\n\n`;
             }
