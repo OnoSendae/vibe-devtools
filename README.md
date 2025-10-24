@@ -1009,7 +1009,7 @@ MIT © 2025 [Ono Sendae](https://github.com/onosendae)
 ### GitHub
 
 - **Monorepo**: https://github.com/onosendae/vibe-devtools
-- **Issues**: https://github.com/onosendae/vibe-devtools/issues
+- **Issues**: https://github.com/OnoSendae/vibe-devtools/issues
 - **Discussions**: https://github.com/onosendae/vibe-devtools/discussions
 
 ### Docs

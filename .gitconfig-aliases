@@ -1,0 +1,32 @@
+[alias]
+	push-all = "!f() { \
+		branch=${1:-$(git branch --show-current)}; \
+		echo '🔄 Git RAID Push - Sincronizando origin + backup'; \
+		echo '📍 Branch: '$branch; \
+		echo ''; \
+		echo '1️⃣  Pushing to origin...'; \
+		git push origin \"$branch\" && echo '✅ origin: Push successful' || { echo '❌ origin: Push failed'; exit 1; }; \
+		echo ''; \
+		echo '2️⃣  Pushing to backup...'; \
+		git push backup \"$branch\" && echo '✅ backup: Push successful' || { echo '⚠️  backup: Push failed (origin já foi atualizado)'; exit 1; }; \
+		echo ''; \
+		echo '🎉 Sincronização completa!'; \
+		echo '   origin: OnoSendae/vibes-ecosystem'; \
+		echo '   backup: OnoSendae/vibe-devtools-bkp'; \
+	}; f"
+	
+	sync-backup = "!f() { \
+		branch=${1:-$(git branch --show-current)}; \
+		echo '🔄 Sincronizando backup com PRs/merges remotos'; \
+		echo '📍 Branch: '$branch; \
+		echo ''; \
+		echo '1️⃣  Pulling from origin...'; \
+		git pull origin \"$branch\" && echo '✅ Pull from origin successful' || { echo '❌ Pull from origin failed'; exit 1; }; \
+		echo ''; \
+		echo '2️⃣  Pushing to backup...'; \
+		git push backup \"$branch\" && echo '✅ backup atualizado com mudanças de origin' || { echo '❌ backup: Push failed'; exit 1; }; \
+		echo ''; \
+		echo '🎉 Backup sincronizado com origin!'; \
+		echo '   Mudanças remotas (PRs) agora estão no backup'; \
+	}; f"
+

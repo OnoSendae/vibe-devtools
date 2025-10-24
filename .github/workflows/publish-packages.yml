@@ -20,7 +20,7 @@ on:
 
 jobs:
   publish-basic:
-    if: github.event.inputs.package == 'basic' || github.event.inputs.package == 'all' || startsWith(github.ref, 'refs/tags/packages/basic/')
+    if: (github.event.inputs.package == 'basic' || github.event.inputs.package == 'all' || startsWith(github.ref, 'refs/tags/packages/basic/')) && github.repository == 'OnoSendae/vibe-devtools'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -44,7 +44,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   publish-research:
-    if: github.event.inputs.package == 'research' || github.event.inputs.package == 'all' || startsWith(github.ref, 'refs/tags/packages/research/')
+    if: (github.event.inputs.package == 'research' || github.event.inputs.package == 'all' || startsWith(github.ref, 'refs/tags/packages/research/')) && github.repository == 'OnoSendae/vibe-devtools'
     runs-on: ubuntu-latest
     permissions:
       contents: read
