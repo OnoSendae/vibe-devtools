@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.1
+
+### Patch Changes
+
+- 9ad1803: Change GitHub Copilot adapter from instructions to prompts structure
+  - Change from `.github/instructions/*.instructions.md` to `.github/prompts/*.prompt.md`
+  - Update path in getTargetPaths() from 'instructions' to 'prompts'
+  - Rename files: `project.instructions.md` → `project.prompt.md`
+  - Rename files: `command-*.instructions.md` → `*.prompt.md` (without command- prefix)
+  - Rename files: `rules.instructions.md` → `rules.prompt.md`
+  - Update command references from @ to / (e.g., "@research.deep" → "/research.deep")
+  - Maintain frontmatter with applyTo directives
+  - Keep modular structure with separate files for project, commands, and rules
+
 ## 1.0.0 - 2025-10-23
 
 ### 🎉 Major Release: Stash System
@@ -9,6 +23,7 @@ Git-inspired stash system for complete conflict management and backups.
 #### Added
 
 **Stash System Core**:
+
 - HashCalculator with SHA-256 for file integrity
 - StashLogger with JSONL logging
 - StashManager for complete lifecycle
@@ -16,6 +31,7 @@ Git-inspired stash system for complete conflict management and backups.
 - ConflictResolver with interactive prompts
 
 **CLI Commands** (8 new commands):
+
 - `vdt stash list` - List all stashes
 - `vdt stash show <id>` - Show details
 - `vdt stash apply <id>` - Apply (keep)
@@ -26,11 +42,13 @@ Git-inspired stash system for complete conflict management and backups.
 - `vdt stash clear` - Clear all
 
 **Update Command**:
+
 - `vdt update <package> --version <ver>`
 - `vdt update <package> --latest`
 - `vdt update <package> --dry-run`
 
 **Install Enhancements**:
+
 - Automatic conflict detection
 - Interactive resolution (overwrite/stash/cancel)
 - `--dry-run` flag for preview
