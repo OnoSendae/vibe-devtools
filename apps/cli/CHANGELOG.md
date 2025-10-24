@@ -1,5 +1,53 @@
 # Changelog
 
+## 1.0.0 - 2025-10-23
+
+### 🎉 Major Release: Stash System
+
+Git-inspired stash system for complete conflict management and backups.
+
+#### Added
+
+**Stash System Core**:
+- HashCalculator with SHA-256 for file integrity
+- StashLogger with JSONL logging
+- StashManager for complete lifecycle
+- ConflictDetector for automatic detection
+- ConflictResolver with interactive prompts
+
+**CLI Commands** (8 new commands):
+- `vdt stash list` - List all stashes
+- `vdt stash show <id>` - Show details
+- `vdt stash apply <id>` - Apply (keep)
+- `vdt stash pop <id>` - Apply and remove
+- `vdt stash remove <id>` - Remove stash
+- `vdt stash diff <id>` - Show differences
+- `vdt stash save [files]` - Manual stash
+- `vdt stash clear` - Clear all
+
+**Update Command**:
+- `vdt update <package> --version <ver>`
+- `vdt update <package> --latest`
+- `vdt update <package> --dry-run`
+
+**Install Enhancements**:
+- Automatic conflict detection
+- Interactive resolution (overwrite/stash/cancel)
+- `--dry-run` flag for preview
+- Stash metadata with versions
+
+#### Changed
+
+- Install now uses `force: true` after conflicts resolved
+- Install shows stash info on success
+
+#### Dependencies
+
+- Added `inquirer@^9.2.0`
+- Added `diff@^5.1.0`
+- Added `@types/inquirer@^9.0.0`
+- Added `@types/diff@^5.0.0`
+
 ## 0.7.1
 
 ### Patch Changes

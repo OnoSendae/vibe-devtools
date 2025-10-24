@@ -1,5 +1,8 @@
 import prompts from 'prompts';
 import chalk from 'chalk';
+import fs from 'node:fs/promises';
+import { spawn } from 'node:child_process';
+import { createTwoFilesPatch } from 'diff';
 import type { Conflict } from './conflict-detector.js';
 
 export type ConflictResolution =
@@ -59,12 +62,111 @@ export class ConflictResolver {
         return response.resolution;
     }
 
-    async showDiff(_conflict: Conflict, _inline: boolean): Promise<void> {
-        throw new Error('Not implemented yet - will be implemented in TASK-022');
+    async showDiff(conflict: Conflict, inline: boolean): Promise<void> {
+        const existingContent = await fs.readFile(conflict.destPath, 'utf-8');
+        const incomingContent = await fs.readFile(conflict.sourcePath, 'utf-8');
+
+        const patch = createTwoFilesPatch(
+            conflict.destPath,
+            conflict.destPath,
+            existingContent,
+            incomingContent,
+            'Local',
+            'Package'
+        );
+
+        if (!inline) {
+            console.log(patch);
+            return;
+        }
+
+        console.log('');
+        console.log(chalk.bold(`Diff: ${conflict.destPath}`));
+        console.log('');
+
+        const lines = patch.split('\n');
+        for (const line of lines) {
+            if (line.startsWith('+') && !line.startsWith('+++')) {
+                console.log(chalk.green(line));
+            } else if (line.startsWith('-') && !line.startsWith('---')) {
+                console.log(chalk.red(line));
+            } else if (line.startsWith('@@')) {
+                console.log(chalk.cyan(line));
+            } else {
+                console.log(chalk.gray(line));
+            }
+        }
+
+        console.log('');
     }
 
-    async openInEditor(_conflict: Conflict): Promise<void> {
-        throw new Error('Not implemented yet - will be implemented in TASK-023');
+    async openInEditor(conflict: Conflict): Promise<void> {
+        const editor = this.detectEditor();
+
+        if (!editor) {
+            console.log(chalk.yellow('⚠️  No editor detected'));
+            console.log(chalk.gray('Set EDITOR environment variable or install VSCode'));
+            return;
+        }
+
+        const { command, args } = this.getEditorCommand(editor, conflict);
+
+        return new Promise((resolve, reject) => {
+            const proc = spawn(command, args, { stdio: 'inherit' });
+
+            proc.on('exit', (code) => {
+                if (code === 0) {
+                    resolve();
+                } else {
+                    reject(new Error(`Editor exited with code ${code}`));
+                }
+            });
+
+            proc.on('error', (err) => {
+                reject(err);
+            });
+        });
+    }
+
+    private detectEditor(): string | null {
+        if (process.env.EDITOR) {
+            return process.env.EDITOR;
+        }
+
+        const editors = ['code', 'subl', 'vim', 'nano'];
+
+        for (const editor of editors) {
+            try {
+                const { execSync } = require('node:child_process');
+                execSync(`which ${editor}`, { stdio: 'ignore' });
+                return editor;
+            } catch {
+                continue;
+            }
+        }
+
+        return null;
+    }
+
+    private getEditorCommand(editor: string, conflict: Conflict): { command: string; args: string[] } {
+        if (editor === 'code' || editor.endsWith('code')) {
+            return {
+                command: 'code',
+                args: ['--diff', conflict.destPath, conflict.sourcePath]
+            };
+        }
+
+        if (editor === 'subl' || editor.endsWith('sublime_text')) {
+            return {
+                command: 'subl',
+                args: [conflict.destPath, conflict.sourcePath]
+            };
+        }
+
+        return {
+            command: editor,
+            args: [conflict.destPath]
+        };
     }
 
     private formatSize(bytes: number): string {
