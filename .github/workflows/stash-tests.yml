@@ -49,7 +49,7 @@ jobs:
         if: always()
         run: |
           cd apps/cli
-          npm run test:coverage -- --coverageReporters=json-summary
+          npm run test:coverage
       
       - name: Upload Test Results
         if: always()
