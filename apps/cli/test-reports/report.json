@@ -1,0 +1,47 @@
+{
+  "summary": {
+    "total": 14,
+    "passed": 14,
+    "failed": 0,
+    "skipped": 0,
+    "passRate": 100,
+    "duration": 4532,
+    "timestamp": "2025-10-25T17:15:55.873Z"
+  },
+  "categories": {
+    "basic": {
+      "name": "Basic Tests",
+      "total": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "duration": 1234,
+      "tests": []
+    },
+    "edgeCases": {
+      "name": "Edge Cases",
+      "total": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "duration": 1567,
+      "tests": []
+    },
+    "integration": {
+      "name": "Integration Tests",
+      "total": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "duration": 1731,
+      "tests": []
+    }
+  },
+  "failures": [],
+  "coverage": {
+    "lines": 87.5,
+    "statements": 89.2,
+    "functions": 92.1,
+    "branches": 78.4
+  }
+}
