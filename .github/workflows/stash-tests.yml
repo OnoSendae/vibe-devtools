@@ -1,0 +1,72 @@
+name: Stash Test Suite
+
+on:
+  push:
+    branches: [ main, develop, 'feat/**' ]
+    paths:
+      - 'apps/cli/src/stash/**'
+      - 'apps/cli/src/commands/stash.ts'
+      - 'apps/cli/__tests__/**'
+      - '.github/workflows/stash-tests.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'apps/cli/src/stash/**'
+      - 'apps/cli/src/commands/stash.ts'
+      - 'apps/cli/__tests__/**'
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node-version: [18.x, 20.x, 22.x]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      
+      - name: Install dependencies
+        run: |
+          cd apps/cli
+          npm install
+      
+      - name: Run Stash Tests
+        run: |
+          cd apps/cli
+          bash __tests__/scripts/run-all-tests.sh
+        env:
+          CI: true
+      
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.os }}-node${{ matrix.node-version }}
+          path: apps/cli/test-reports/
+          retention-days: 30
+      
+      - name: Comment PR with Results
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            let comment = `## 🧪 Stash Test Results\n\n`;
+            comment += `**OS**: ${{ matrix.os }}\n`;
+            comment += `**Node**: ${{ matrix.node-version }}\n`;
+            comment += `**Status**: ${{ job.status }}\n`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
